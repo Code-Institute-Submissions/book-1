@@ -1,10 +1,11 @@
 import json
 from rich.console import Console
 from rich.table import Table
-from datetime import datetime
+
 
 # Ascii art
 ascii_art = r'''
+
  /$$$$$$$$                /$$$$$$$                  /$$       /$$             /$$    
 |__  $$__/               | $$__  $$                | $$      |__/            | $$    
    | $$  /$$$$$$         | $$  \ $$  /$$$$$$       | $$       /$$  /$$$$$$$ /$$$$$$  
@@ -13,7 +14,23 @@ ascii_art = r'''
    | $$| $$  | $$        | $$  | $$| $$  | $$      | $$      | $$ \____  $$  | $$ /$$
    | $$|  $$$$$$/        | $$$$$$$/|  $$$$$$/      | $$$$$$$$| $$ /$$$$$$$/  |  $$$$/
    |__/ \______/         |_______/  \______/       |________/|__/|_______/    \___/  
+                                                                                     
+                                                                                     
+                                                                                     
+ /$$      /$$                                                                        
+| $$$    /$$$                                                                        
+| $$$$  /$$$$  /$$$$$$  /$$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$             
+| $$ $$/$$ $$ |____  $$| $$__  $$ |____  $$ /$$__  $$ /$$__  $$ /$$__  $$            
+| $$  $$$| $$  /$$$$$$$| $$  \ $$  /$$$$$$$| $$  \ $$| $$$$$$$$| $$  \__/            
+| $$\  $ | $$ /$$__  $$| $$  | $$ /$$__  $$| $$  | $$| $$_____/| $$                  
+| $$ \/  | $$|  $$$$$$$| $$  | $$|  $$$$$$$|  $$$$$$$|  $$$$$$$| $$                  
+|__/     |__/ \_______/|__/  |__/ \_______/ \____  $$ \_______/|__/                  
+                                            /$$  \ $$                                
+                                           |  $$$$$$/                                
+                                            \______/                                 
 '''
+# http://patorjk.com/software/taag/#p=author&c=mysql&f=Big%20Money-ne&t=To-do%20List%0AManager
+
 
 # Initialize the rich console for styled output
 console = Console()
@@ -46,27 +63,17 @@ def show_tasks():
         table.add_column("No.", justify="right", style="bold magenta", width=3)
         table.add_column("Task", justify="left", style="bold white")
         table.add_column("Priority", justify="center", style="bold blue")
-        table.add_column("Due Date", justify="center", style="bold yellow")
         table.add_column("Status", justify="center", style="bold green")
 
         for index, task in enumerate(tasks, 1):
             status = "✓" if task.get('done') else "✗"
-            due_date = task.get('due_date', 'N/A')
-            table.add_row(str(index), task['task'], task['priority'], due_date, status)
+            table.add_row(str(index), task['task'], task['priority'], status)
 
         console.print(table)
 
 # Validate the priority input
 def validate_priority(priority):
     return priority in ["High", "Medium", "Low"]
-
-# Validate the date input
-def validate_date(date_text):
-    try:
-        datetime.strptime(date_text, '%Y-%m-%d')
-        return True
-    except ValueError:
-        return False
 
 # Add a task to the list
 def add_task():
@@ -77,17 +84,8 @@ def add_task():
             break
         else:
             console.print("[red]Invalid priority! Please enter High, Medium, or Low.[/red]")
-
-    # Get due date
-    while True:
-        due_date = console.input("[cyan]Enter due date (YYYY-MM-DD): [/cyan]")
-        if validate_date(due_date):
-            break
-        else:
-            console.print("[red]Invalid date format! Please use YYYY-MM-DD.[/red]")
-
-    tasks.append({'task': task, 'priority': priority, 'due_date': due_date, 'done': False})
-    console.print(f"[green]Task '{task}' with priority '{priority}' and due date '{due_date}' added to the list.[/green]")
+    tasks.append({'task': task, 'priority': priority, 'done': False})
+    console.print(f"[green]Task '{task}' with priority '{priority}' added to the list.[/green]")
 
 # Delete a task from the list
 def delete_task():
@@ -131,7 +129,7 @@ def edit_task():
             task_index = int(task_num) - 1
             task = tasks[task_index]
             
-            console.print(f"[yellow]Editing Task: {task['task']} (Priority: {task['priority']}, Due Date: {task['due_date']})[/yellow]")
+            console.print(f"[yellow]Editing Task: {task['task']} (Priority: {task['priority']})[/yellow]")
             new_task = console.input("[cyan]Enter the new task description (leave blank to keep unchanged): [/cyan]")
             if new_task:
                 task['task'] = new_task
@@ -146,17 +144,7 @@ def edit_task():
                 else:
                     console.print("[red]Invalid priority! Please enter High, Medium, or Low.[/red]")
 
-            while True:
-                new_due_date = console.input("[cyan]Enter new due date (YYYY-MM-DD, leave blank to keep unchanged): [/cyan]")
-                if new_due_date == "":
-                    break  # Keep existing due date
-                elif validate_date(new_due_date):
-                    task['due_date'] = new_due_date
-                    break
-                else:
-                    console.print("[red]Invalid date format! Please use YYYY-MM-DD.[/red]")
-
-            console.print(f"[green]Task updated to: '{task['task']}' with priority '{task['priority']}' and due date '{task['due_date']}'[/green]")
+            console.print(f"[green]Task updated to: '{task['task']}' with priority '{task['priority']}'[/green]")
             break
         else:
             console.print("[red]Invalid task number! Please try again.[/red]")
@@ -175,12 +163,11 @@ def filter_tasks():
         table = Table(title=f"{priority} Priority Tasks", show_header=True, header_style="bold cyan")
         table.add_column("No.", justify="right", style="bold magenta", width=3)
         table.add_column("Task", justify="left", style="bold white")
-        table.add_column("Due Date", justify="center", style="bold yellow")
         table.add_column("Status", justify="center", style="bold green")
 
         for index, task in enumerate(filtered_tasks, 1):
             status = "✓" if task.get('done') else "✗"
-            table.add_row(str(index), task['task'], task['due_date'], status)
+            table.add_row(str(index), task['task'], status)
 
         console.print(table)
     else:
@@ -195,37 +182,44 @@ def task_summary():
 # Show help menu
 def show_help():
     console.print("[bold cyan]Help Menu:[/bold cyan]")
-    console.print("- Use the menu to navigate and manage your tasks.")
-    console.print("- You can add, edit, delete, mark tasks as done, and filter tasks.")
-    console.print("- Follow prompts to enter the required information.")
+    console.print("1. Show Tasks - Display all tasks")
+    console.print("2. Add Task - Add a new task")
+    console.print("3. Mark Task as Done - Mark a task as completed")
+    console.print("4. Delete Task - Delete a task from the list")
+    console.print("5. Edit Task - Edit an existing task")
+    console.print("6. Filter Tasks - View tasks by priority (High/Medium/Low)")
+    console.print("7. Task Summary - View summary of tasks")
+    console.print("8. Help - Display this help menu")
+    console.print("9. Exit - Save and exit the application")
 
-# Main menu
-def main_menu():
-    load_tasks()
+# Main menu loop
+def main():
+    load_tasks()  # Load tasks when the program starts
     while True:
         console.print(ascii_art)
-        console.print("[bold cyan]1. Add Task[/bold cyan]")
-        console.print("[bold cyan]2. Show Tasks[/bold cyan]")
-        console.print("[bold cyan]3. Edit Task[/bold cyan]")
-        console.print("[bold cyan]4. Delete Task[/bold cyan]")
-        console.print("[bold cyan]5. Mark Task as Done[/bold cyan]")
-        console.print("[bold cyan]6. Filter Tasks by Priority[/bold cyan]")
-        console.print("[bold cyan]7. Task Summary[/bold cyan]")
-        console.print("[bold cyan]8. Show Help[/bold cyan]")
-        console.print("[bold cyan]9. Save and Exit[/bold cyan]")
+        console.print("\n[bold cyan]Menu:[/bold cyan]")
+        console.print("1. Show Tasks")
+        console.print("2. Add Task")
+        console.print("3. Mark Task as Done")
+        console.print("4. Delete Task")
+        console.print("5. Edit Task")
+        console.print("6. Filter by Priority")
+        console.print("7. Task Summary")
+        console.print("8. Help")
+        console.print("9. Exit")
 
-        choice = console.input("[cyan]Choose an option: [/cyan]")
+        choice = console.input("[cyan]Enter your choice: [/cyan]")
 
         if choice == '1':
-            add_task()
-        elif choice == '2':
             show_tasks()
+        elif choice == '2':
+            add_task()
         elif choice == '3':
-            edit_task()
+            mark_done()
         elif choice == '4':
             delete_task()
         elif choice == '5':
-            mark_done()
+            edit_task()
         elif choice == '6':
             filter_tasks()
         elif choice == '7':
@@ -233,11 +227,13 @@ def main_menu():
         elif choice == '8':
             show_help()
         elif choice == '9':
-            save_tasks()
-            console.print("[green]Tasks saved. Exiting program.[/green]")
+            save_tasks()  # Save tasks before exiting
+            console.print("[cyan]Goodbye![/cyan]")
             break
         else:
-            console.print("[red]Invalid choice! Please select a valid option.[/red]")
+            console.print("[red]Invalid choice! Please try again.[/red]")
 
+# Run the program
 if __name__ == "__main__":
-    main_menu()
+    main()
+    
