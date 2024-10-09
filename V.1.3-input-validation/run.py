@@ -87,38 +87,6 @@ def mark_done():
         else:
             console.print("[red]Invalid task number! Please try again.[/red]")
 
-# Edit an existing task
-def edit_task():
-    show_tasks()
-    if not tasks:
-        return  # No tasks to edit
-
-    while True:
-        task_num = console.input("[cyan]Enter the task number to edit: [/cyan]")
-        if task_num.isdigit() and 1 <= int(task_num) <= len(tasks):
-            task_index = int(task_num) - 1
-            task = tasks[task_index]
-            
-            console.print(f"[yellow]Editing Task: {task['task']} (Priority: {task['priority']})[/yellow]")
-            new_task = console.input("[cyan]Enter the new task description (leave blank to keep unchanged): [/cyan]")
-            if new_task:
-                task['task'] = new_task
-
-            while True:
-                new_priority = console.input("[cyan]Set new priority (High/Medium/Low, leave blank to keep unchanged): [/cyan]").capitalize()
-                if new_priority == "":
-                    break  # Keep existing priority
-                elif validate_priority(new_priority):
-                    task['priority'] = new_priority
-                    break
-                else:
-                    console.print("[red]Invalid priority! Please enter High, Medium, or Low.[/red]")
-
-            console.print(f"[green]Task updated to: '{task['task']}' with priority '{task['priority']}'[/green]")
-            break
-        else:
-            console.print("[red]Invalid task number! Please try again.[/red]")
-
 # Filter tasks by priority
 def filter_tasks():
     while True:
@@ -156,11 +124,10 @@ def show_help():
     console.print("2. Add Task - Add a new task")
     console.print("3. Mark Task as Done - Mark a task as completed")
     console.print("4. Delete Task - Delete a task from the list")
-    console.print("5. Edit Task - Edit an existing task")
-    console.print("6. Filter Tasks - View tasks by priority (High/Medium/Low)")
-    console.print("7. Task Summary - View summary of tasks")
-    console.print("8. Help - Display this help menu")
-    console.print("9. Exit - Save and exit the application")
+    console.print("5. Filter Tasks - View tasks by priority (High/Medium/Low)")
+    console.print("6. Task Summary - View summary of tasks")
+    console.print("7. Help - Display this help menu")
+    console.print("8. Exit - Save and exit the application")
 
 # Main menu loop
 def main():
@@ -171,11 +138,10 @@ def main():
         console.print("2. Add Task")
         console.print("3. Mark Task as Done")
         console.print("4. Delete Task")
-        console.print("5. Edit Task")
-        console.print("6. Filter by Priority")
-        console.print("7. Task Summary")
-        console.print("8. Help")
-        console.print("9. Exit")
+        console.print("5. Filter by Priority")
+        console.print("6. Task Summary")
+        console.print("7. Help")
+        console.print("8. Exit")
 
         choice = console.input("[cyan]Enter your choice: [/cyan]")
 
@@ -188,14 +154,12 @@ def main():
         elif choice == '4':
             delete_task()
         elif choice == '5':
-            edit_task()
-        elif choice == '6':
             filter_tasks()
-        elif choice == '7':
+        elif choice == '6':
             task_summary()
-        elif choice == '8':
+        elif choice == '7':
             show_help()
-        elif choice == '9':
+        elif choice == '8':
             save_tasks()  # Save tasks before exiting
             console.print("[cyan]Goodbye![/cyan]")
             break
