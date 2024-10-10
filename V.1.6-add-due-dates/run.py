@@ -202,8 +202,8 @@ def show_help():
 # Main menu
 def main_menu():
     load_tasks()
+    console.print(ascii_art)
     while True:
-        console.print(ascii_art)
         console.print("[bold cyan]1. Add Task[/bold cyan]")
         console.print("[bold cyan]2. Show Tasks[/bold cyan]")
         console.print("[bold cyan]3. Edit Task[/bold cyan]")
@@ -212,7 +212,7 @@ def main_menu():
         console.print("[bold cyan]6. Filter Tasks by Priority[/bold cyan]")
         console.print("[bold cyan]7. Task Summary[/bold cyan]")
         console.print("[bold cyan]8. Show Help[/bold cyan]")
-        console.print("[bold cyan]9. Save and Exit[/bold cyan]")
+        console.print("[bold cyan]9. Save and Exit[/bold cyan]\n")
 
         choice = console.input("[cyan]Choose an option: [/cyan]")
 
