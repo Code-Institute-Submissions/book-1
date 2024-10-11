@@ -50,7 +50,7 @@ def show_tasks():
         table.add_column("Status", justify="center", style="bold green")
 
         for index, task in enumerate(tasks, 1):
-            status = "✓" if task.get('done') else "✗"
+            status = "✅" if task.get('done') else "❌"  # Use emoticons here
             due_date = task.get('due_date', 'N/A')
             table.add_row(str(index), task['task'], task['priority'], due_date, status)
 
@@ -179,7 +179,7 @@ def filter_tasks():
         table.add_column("Status", justify="center", style="bold green")
 
         for index, task in enumerate(filtered_tasks, 1):
-            status = "✓" if task.get('done') else "✗"
+            status = "✅" if task.get('done') else "❌"
             table.add_row(str(index), task['task'], task['due_date'], status)
 
         console.print(table)
@@ -206,26 +206,26 @@ def main_menu():
     while True:
         console.print("[bold cyan]1. Add Task[/bold cyan]")
         console.print("[bold cyan]2. Show Tasks[/bold cyan]")
-        console.print("[bold cyan]3. Edit Task[/bold cyan]")
-        console.print("[bold cyan]4. Delete Task[/bold cyan]")
-        console.print("[bold cyan]5. Mark Task as Done[/bold cyan]")
-        console.print("[bold cyan]6. Filter Tasks by Priority[/bold cyan]")
-        console.print("[bold cyan]7. Task Summary[/bold cyan]")
+        console.print("[bold cyan]3. Delete Task[/bold cyan]")
+        console.print("[bold cyan]4. Mark Task as Done[/bold cyan]")
+        console.print("[bold cyan]5. Edit Task[/bold cyan]")
+        console.print("[bold cyan]6. Filter Tasks[/bold cyan]")
+        console.print("[bold cyan]7. Show Task Summary[/bold cyan]")
         console.print("[bold cyan]8. Show Help[/bold cyan]")
-        console.print("[bold cyan]9. Save and Exit[/bold cyan]\n")
+        console.print("[bold cyan]9. Exit[/bold cyan]")
 
-        choice = console.input("[cyan]Choose an option: [/cyan]")
-
+        choice = console.input("[cyan]Enter your choice: [/cyan]")
+        
         if choice == '1':
             add_task()
         elif choice == '2':
             show_tasks()
         elif choice == '3':
-            edit_task()
-        elif choice == '4':
             delete_task()
-        elif choice == '5':
+        elif choice == '4':
             mark_done()
+        elif choice == '5':
+            edit_task()
         elif choice == '6':
             filter_tasks()
         elif choice == '7':
@@ -234,10 +234,11 @@ def main_menu():
             show_help()
         elif choice == '9':
             save_tasks()
-            console.print("[green]Tasks saved. Exiting program.[/green]")
+            console.print("[green]Goodbye![/green]")
             break
         else:
-            console.print("[red]Invalid choice! Please select a valid option.[/red]")
+            console.print("[red]Invalid choice! Please try again.[/red]")
 
+# Run the program
 if __name__ == "__main__":
     main_menu()
