@@ -38,11 +38,8 @@ def save_tasks(filename='tasks.json'):
         json.dump(tasks, file)
 
 # Display tasks using a rich table
-def show_tasks(tasks_to_display=None):
-    if tasks_to_display is None:
-        tasks_to_display = tasks
-        
-    if not tasks_to_display:
+def show_tasks():
+    if not tasks:
         console.print("[yellow]Your to-do list is empty.[/yellow]")
     else:
         table = Table(title="To-Do List", show_header=True, header_style="bold cyan")
@@ -52,8 +49,8 @@ def show_tasks(tasks_to_display=None):
         table.add_column("Due Date", justify="center", style="bold yellow")
         table.add_column("Status", justify="center", style="bold green")
 
-        for index, task in enumerate(tasks_to_display, 1):
-            status = "✅" if task.get('done') else "❌"
+        for index, task in enumerate(tasks, 1):
+            status = "✅" if task.get('done') else "❌"  # Use emoticons here
             due_date = task.get('due_date', 'N/A')
             table.add_row(str(index), task['task'], task['priority'], due_date, status)
 
@@ -189,54 +186,59 @@ def filter_tasks():
     else:
         console.print(f"[yellow]No tasks found with {priority} priority.[/yellow]")
 
-# Search tasks by keyword
-def search_tasks():
-    keyword = console.input("[cyan]Enter keyword to search for tasks: [/cyan]")
-    found_tasks = [task for task in tasks if keyword.lower() in task['task'].lower()]
+# Show task summary
+def task_summary():
+    total = len(tasks)
+    done = sum(1 for task in tasks if task['done'])
+    console.print(f"[cyan]Total Tasks: {total}, Completed: {done}, Remaining: {total - done}[/cyan]")
 
-    if found_tasks:
-        show_tasks(found_tasks)
-    else:
-        console.print("[yellow]No tasks found matching your search.[/yellow]")
+# Show help menu
+def show_help():
+    console.print("[bold cyan]Help Menu:[/bold cyan]")
+    console.print("- Use the menu to navigate and manage your tasks.")
+    console.print("- You can add, edit, delete, mark tasks as done, and filter tasks.")
+    console.print("- Follow prompts to enter the required information.")
 
-# Main program loop
-def main():
+# Main menu
+def main_menu():
     load_tasks()
     console.print(ascii_art)
-    console.print("[green]Welcome to the Task Manager![/green]")
-    
     while True:
-        console.print("\n[blue]Menu:[/blue]")
-        console.print("1. Add Task")
-        console.print("2. Delete Task")
-        console.print("3. Mark Task as Done")
-        console.print("4. Edit Task")
-        console.print("5. Show All Tasks")
-        console.print("6. Filter Tasks by Priority")
-        console.print("7. Search Tasks")
-        console.print("8. Exit")
+        console.print("[bold cyan]1. Add Task[/bold cyan]")
+        console.print("[bold cyan]2. Show Tasks[/bold cyan]")
+        console.print("[bold cyan]3. Delete Task[/bold cyan]")
+        console.print("[bold cyan]4. Mark Task as Done[/bold cyan]")
+        console.print("[bold cyan]5. Edit Task[/bold cyan]")
+        console.print("[bold cyan]6. Filter Tasks[/bold cyan]")
+        console.print("[bold cyan]7. Show Task Summary[/bold cyan]")
+        console.print("[bold cyan]8. Show Help[/bold cyan]")
+        console.print("[bold cyan]9. Exit[/bold cyan]")
 
-        choice = console.input("[cyan]Choose an option: [/cyan]")
-        if choice == "1":
+        choice = console.input("[cyan]Enter your choice: [/cyan]")
+        
+        if choice == '1':
             add_task()
-        elif choice == "2":
-            delete_task()
-        elif choice == "3":
-            mark_done()
-        elif choice == "4":
-            edit_task()
-        elif choice == "5":
+        elif choice == '2':
             show_tasks()
-        elif choice == "6":
+        elif choice == '3':
+            delete_task()
+        elif choice == '4':
+            mark_done()
+        elif choice == '5':
+            edit_task()
+        elif choice == '6':
             filter_tasks()
-        elif choice == "7":
-            search_tasks()
-        elif choice == "8":
+        elif choice == '7':
+            task_summary()
+        elif choice == '8':
+            show_help()
+        elif choice == '9':
             save_tasks()
-            console.print("[green]Tasks saved. Exiting the program.[/green]")
+            console.print("[green]Goodbye![/green]")
             break
         else:
             console.print("[red]Invalid choice! Please try again.[/red]")
 
+# Run the program
 if __name__ == "__main__":
-    main()
+    main_menu()
