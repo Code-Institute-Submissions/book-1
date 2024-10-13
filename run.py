@@ -1,6 +1,7 @@
 import json
 import os
 import bcrypt
+import getpass
 from rich.console import Console
 from rich.table import Table
 from datetime import datetime
