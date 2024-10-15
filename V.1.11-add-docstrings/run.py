@@ -1,6 +1,7 @@
 import json
 import os
 import bcrypt
+import getpass
 from rich.console import Console
 from rich.table import Table
 from datetime import datetime
@@ -252,11 +253,6 @@ def edit_task(user_data):
 
 # Filter tasks by priority
 def filter_tasks(user_data):
-    """Filter tasks by their priority level.
-
-    Args:
-        tasks (list): A list of tasks to filter.
-    """
     priority = console.input("[cyan]Enter priority to filter tasks (High/Medium/Low): [/cyan]").capitalize()
     if priority not in ["High", "Medium", "Low"]:
         console.print("[red]Invalid priority! Please enter High, Medium, or Low.[/red]")
@@ -271,11 +267,6 @@ def filter_tasks(user_data):
 
 # Search tasks by keyword
 def search_tasks(user_data):
-    """Search for tasks containing a specific keyword.
-
-    Args:
-        tasks (list): A list of tasks to search.
-    """
     keyword = console.input("[cyan]Enter keyword to search for tasks (e.g., 'groceries'): [/cyan]")
     found_tasks = [task for task in user_data['tasks'] if keyword.lower() in task['task'].lower()]
 
@@ -287,11 +278,6 @@ def search_tasks(user_data):
 
 # Sort tasks by due date
 def sort_tasks_by_date(user_data):
-     """Sort tasks by their due date.
-
-    Args:
-        tasks (list): A list of tasks to sort.
-    """
     user_data['tasks'].sort(key=lambda task: datetime.strptime(task['due_date'], '%Y-%m-%d'))
 
 # Main program loop
