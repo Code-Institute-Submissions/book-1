@@ -294,11 +294,6 @@ def search_tasks(user_data):
 def sort_tasks_by_date(user_data):
     user_data['tasks'].sort(key=lambda task: datetime.strptime(task['due_date'], '%Y-%m-%d'))
 
-def clear_screen():
-    """Clears the terminal screen."""
-    os.system('clear')  # For Linux/macOS
-    # os.system('cls')  # Use this for Windows    
-
 # Main program loop
 def main():
     """Run the task manager application.
@@ -313,8 +308,8 @@ def main():
         console.print("[bold cyan]1. Register[/bold cyan]")
         console.print("[bold cyan]2. Login[/bold cyan]")
         console.print("[bold cyan]3. Exit[/bold cyan]")
+
         choice = console.input("[cyan]Choose an option (1-3): [/cyan]")
-        clear_screen()
         if choice == "1":
             register(users)
         elif choice == "2":
@@ -333,7 +328,6 @@ def main():
                 console.print("[bold cyan]9. Logout[/bold cyan]")
 
                 user_choice = console.input("[cyan]Choose an option (1-9): [/cyan]")
-                clear_screen()
                 if user_choice == "1":
                     add_task(user_data)
                 elif user_choice == "2":
