@@ -331,7 +331,6 @@ def main():
                 console.print("[bold cyan]7. Search Tasks[/bold cyan]")
                 console.print("[bold cyan]8. Sort Tasks by Due Date[/bold cyan]")
                 console.print("[bold cyan]9. Logout[/bold cyan]")
-
                 user_choice = console.input("[cyan]Choose an option (1-9): [/cyan]")
                 clear_screen()
                 if user_choice == "1":
