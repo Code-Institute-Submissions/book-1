@@ -335,22 +335,30 @@ def main():
                 clear_screen()
                 if user_choice == "1":
                     add_task(user_data)
+                    clear_screen()
                 elif user_choice == "2":
                     delete_task(user_data)
+                    clear_screen()
                 elif user_choice == "3":
                     mark_done(user_data)
+                    clear_screen()
                 elif user_choice == "4":
                     edit_task(user_data)
+                    clear_screen()
                 elif user_choice == "5":
                     show_tasks(user_data['tasks'])
+                    clear_screen()
                 elif user_choice == "6":
                     filter_tasks(user_data)
+                    clear_screen()
                 elif user_choice == "7":
                     search_tasks(user_data)
+                    clear_screen()
                 elif user_choice == "8":
                     sort_tasks_by_date(user_data)
                     console.print("[green]Tasks sorted by due date successfully![/green]")
                     show_tasks(user_data['tasks'])
+                    clear_screen()
                 elif user_choice == "9":
                     console.print("[green]Logging out...[/green]")
                     break
