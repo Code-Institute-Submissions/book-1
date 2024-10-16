@@ -58,19 +58,27 @@ def register(users):
         users (dict): A dictionary containing existing users.
 
     Raises:
-        ValueError: If the username already exists.
+        ValueError: If the username already exists or is invalid.
     """
     while True:
-        username = console.input("[cyan]Enter a username: [/cyan]")
+        username = console.input("[cyan]Enter a username: [/cyan]").strip()
+        if not username:
+            console.print("[red]Username cannot be empty. Please enter a valid username.[/red]")
+            continue
+
         if username in users:
             console.print("[red]Username already exists. Please choose another.[/red]")
         else:
-            password = console.input("[cyan]Enter a password: [/cyan]").encode('utf-8')
-            hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
-            users[username] = {'password': hashed_password.decode('utf-8'), 'tasks': []}
-            console.print(f"[green]User '{username}' registered successfully![/green]")
-            save_users(users)  # Save after registration
-            break
+            while True:
+                password = console.input("[cyan]Enter a password: [/cyan]").strip()
+                if not password:
+                    console.print("[red]Password cannot be empty. Please enter a valid password.[/red]")
+                else:
+                    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+                    users[username] = {'password': hashed_password.decode('utf-8'), 'tasks': []}
+                    console.print(f"[green]User '{username}' registered successfully![/green]")
+                    save_users(users)  # Save after registration
+                    return
 
 # User login with password verification
 def login(users):
@@ -126,7 +134,13 @@ def add_task(user_data):
     Args:
         user_data (dict): A dictionary containing the user's data, including their tasks.
     """
-    task = console.input("[cyan]Enter the task you want to add (e.g., 'Buy groceries'): [/cyan]")
+    while True:
+        task = console.input("[cyan]Enter the task you want to add (e.g., 'Buy groceries'): [/cyan]").strip()
+        if not task:
+            console.print("[red]Task name cannot be empty! Please enter a valid task.[/red]")
+        else:
+            break
+
     while True:
         priority = console.input("[cyan]Set priority (High/Medium/Low) [example: High]: [/cyan]").capitalize()
         if priority in ["High", "Medium", "Low"]:
