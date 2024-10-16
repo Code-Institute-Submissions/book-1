@@ -1,182 +1,347 @@
 import json
-from tabulate import tabulate
+import os
+import bcrypt
+import getpass
+from rich.console import Console
+from rich.table import Table
+from datetime import datetime
 
-# Constants for ANSI escape codes (for colored output)
-RED = '\033[91m'
-GREEN = '\033[92m'
-YELLOW = '\033[93m'
-CYAN = '\033[96m'
-RESET = '\033[0m'
+# ASCII art
+ascii_art = r'''
+ /$$$$$$$$                /$$$$$$$                  /$$       /$$             /$$    
+|__  $$__/               | $$__  $$                | $$      |__/            | $$    
+   | $$  /$$$$$$         | $$  \ $$  /$$$$$$       | $$       /$$  /$$$$$$$ /$$$$$$  
+   | $$ /$$__  $$ /$$$$$$| $$  | $$ /$$__  $$      | $$      | $$ /$$_____/|_  $$_/  
+   | $$| $$  \ $$|______/| $$  | $$| $$  \ $$      | $$      | $$|  $$$$$$   | $$    
+   | $$| $$  | $$        | $$  | $$| $$  | $$      | $$      | $$ \____  $$  | $$ /$$
+   | $$|  $$$$$$/        | $$$$$$$/|  $$$$$$/      | $$$$$$$$| $$ /$$$$$$$/  |  $$$$/
+   |__/ \______/         |_______/  \______/       |________/|__/|_______/    \___/  
+'''
 
-# Initialize task list
-tasks = []
+# Initialize the rich console for styled output
+console = Console()
 
-# Load tasks from a file
-def load_tasks(filename='tasks.json'):
-    """Load tasks from the specified file."""
-    global tasks
-    try:
-        with open(filename, 'r') as file:
-            tasks = json.load(file)
-    except FileNotFoundError:
-        tasks = []
-    except json.JSONDecodeError:
-        print(RED + "Error loading tasks from file." + RESET)
+# Define the filename for user data
+USER_DATA_FILE = 'users.json'
 
-# Save tasks to a file
-def save_tasks(filename='tasks.json'):
-    """Save tasks to the specified file."""
-    with open(filename, 'w') as file:
-        json.dump(tasks, file, indent=4)
+# Load user data from JSON file
+def load_users():
+    """Load user data from a JSON file.
 
-# Display tasks in a table format
-def show_tasks_table():
-    """Display all tasks in a table."""
-    if not tasks:
-        print(YELLOW + "Your to-do list is empty." + RESET)
-    else:
-        headers = ["No.", "Task", "Priority", "Status"]
-        table_data = [
-            [index + 1, task['task'], task['priority'], "✓" if task['done'] else "✗"]
-            for index, task in enumerate(tasks)
-        ]
-        print("\n" + tabulate(table_data, headers, tablefmt="fancy_grid"))
+    Returns:
+        dict: A dictionary containing user data. If the file is not found
+              or cannot be decoded, returns an empty dictionary.
+    """
+    if os.path.exists(USER_DATA_FILE):
+        with open(USER_DATA_FILE, 'r') as file:
+            return json.load(file)
+    return {}
 
-# Get a valid task number from the user
-def get_valid_number(prompt, max_value):
-    """Prompt the user for a valid task number."""
+# Save user data to JSON file
+def save_users(users):
+    """Save user data to a JSON file.
+
+    Args:
+        users (dict): A dictionary containing user data to be saved.
+
+    Raises:
+        IOError: If there is an error while saving the file.
+    """
+    with open(USER_DATA_FILE, 'w') as file:
+        json.dump(users, file)
+
+# User registration with password hashing
+def register(users):
+    """Register a new user.
+
+    Args:
+        users (dict): A dictionary containing existing users.
+
+    Raises:
+        ValueError: If the username already exists.
+    """
     while True:
-        try:
-            task_num = int(input(prompt))
-            if 1 <= task_num <= max_value:
-                return task_num
-            else:
-                print(RED + f"Please enter a number between 1 and {max_value}." + RESET)
-        except ValueError:
-            print(RED + "That's not a valid number, please try again." + RESET)
-
-# Get valid priority input from the user
-def get_valid_priority():
-    """Prompt the user for a valid task priority."""
-    while True:
-        priority = input("Set priority (High/Medium/Low): ").capitalize()
-        if priority in ['High', 'Medium', 'Low']:
-            return priority
+        username = console.input("[cyan]Enter a username: [/cyan]")
+        if username in users:
+            console.print("[red]Username already exists. Please choose another.[/red]")
         else:
-            print(RED + "Please enter a valid priority: High, Medium, or Low." + RESET)
+            password = console.input("[cyan]Enter a password: [/cyan]").encode('utf-8')
+            hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
+            users[username] = {'password': hashed_password.decode('utf-8'), 'tasks': []}
+            console.print(f"[green]User '{username}' registered successfully![/green]")
+            save_users(users)  # Save after registration
+            break
 
-# Add a new task to the list
-def add_task():
-    """Add a new task with priority."""
-    task = input("Enter the task you want to add: ").strip()
-    if not task:
-        print(RED + "Task cannot be empty!" + RESET)
-        return
-    priority = get_valid_priority()
-    tasks.append({'task': task, 'priority': priority, 'done': False})
-    print(GREEN + f"Task '{task}' with priority '{priority}' added." + RESET)
+# User login with password verification
+def login(users):
+    """Log in an existing user.
 
-# Delete a task from the list
-def delete_task():
-    """Delete a task from the list."""
-    if not tasks:
-        print(YELLOW + "Your to-do list is empty." + RESET)
-        return
-    show_tasks_table()
-    task_num = get_valid_number("Enter the task number to delete: ", len(tasks))
-    confirm = input(f"Are you sure you want to delete task {task_num}? (y/n): ").lower()
-    if confirm == 'y':
-        removed_task = tasks.pop(task_num - 1)
-        print(GREEN + f"Task '{removed_task['task']}' deleted." + RESET)
-    else:
-        print(YELLOW + "Task deletion canceled." + RESET)
+    Args:
+        users (dict): A dictionary containing existing users.
 
-# Mark a task as done
-def mark_done():
-    """Mark a task as completed."""
-    if not tasks:
-        print(YELLOW + "Your to-do list is empty." + RESET)
-        return
-    show_tasks_table()
-    task_num = get_valid_number("Enter the task number to mark as done: ", len(tasks))
-    tasks[task_num - 1]['done'] = True
-    print(GREEN + f"Task {task_num} marked as done." + RESET)
-
-# Filter tasks by priority
-def filter_tasks(priority):
-    """Filter and display tasks based on their priority."""
-    filtered_tasks = [task for task in tasks if task['priority'] == priority]
-    if filtered_tasks:
-        headers = ["No.", "Task", "Priority", "Status"]
-        table_data = [
-            [index + 1, task['task'], task['priority'], "✓" if task['done'] else "✗"]
-            for index, task in enumerate(filtered_tasks)
-        ]
-        print(f"\n{priority} Priority Tasks:")
-        print(tabulate(table_data, headers, tablefmt="fancy_grid"))
-    else:
-        print(f"No tasks with {priority} priority.")
-
-# Display task summary
-def task_summary():
-    """Show a summary of the total, completed, and remaining tasks."""
-    total = len(tasks)
-    done = sum(1 for task in tasks if task.get('done'))
-    print(CYAN + f"\nTotal Tasks: {total}, Completed: {done}, Remaining: {total - done}" + RESET)
-
-# Show help menu
-def show_help():
-    """Display a help menu."""
-    print(CYAN + "\nHelp Menu:" + RESET)
-    print("1. Show Tasks: Display all your current tasks.")
-    print("2. Add Task: Add a new task to your list.")
-    print("3. Mark Task as Done: Mark a task as completed.")
-    print("4. Delete Task: Remove a task from your list.")
-    print("5. Filter by Priority: View tasks based on priority (High/Medium/Low).")
-    print("6. Task Summary: View a summary of all tasks.")
-    print("7. Help: Show this help menu.")
-    print("8. Exit: Save your tasks and exit the application.")
-
-# Main function
-def main():
-    """Main function to run the task manager."""
-    load_tasks()  # Load tasks at the beginning
+    Returns:
+        str: The username of the logged-in user.
+    
+    Raises:
+        ValueError: If the username or password is invalid.
+    """
     while True:
-        print("\n" + CYAN + "Menu:" + RESET)
-        print("1. Show Tasks")
-        print("2. Add Task")
-        print("3. Mark Task as Done")
-        print("4. Delete Task")
-        print("5. Filter by Priority")
-        print("6. Task Summary")
-        print("7. Help")
-        print("8. Exit")
+        username = console.input("[cyan]Enter your username: [/cyan]")
+        password = console.input("[cyan]Enter your password: [/cyan]").encode('utf-8')
+        if username in users and bcrypt.checkpw(password, users[username]['password'].encode('utf-8')):
+            console.print(f"[green]Welcome back, {username}![/green]")
+            return username
+        else:
+            console.print("[red]Invalid username or password. Please try again.[/red]")
 
-        choice = input("Enter your choice: ")
+# Display tasks using a rich table
+def show_tasks(tasks):
+    """Display the user's tasks in a formatted table.
 
-        if choice == '1':
-            show_tasks_table()
-        elif choice == '2':
-            add_task()
-        elif choice == '3':
-            mark_done()
-        elif choice == '4':
-            delete_task()
-        elif choice == '5':
-            priority = get_valid_priority()
-            filter_tasks(priority)
-        elif choice == '6':
-            task_summary()
-        elif choice == '7':
-            show_help()
-        elif choice == '8':
-            save_tasks()  # Save tasks before exiting
-            print(CYAN + "Goodbye!" + RESET)
+    Args:
+        tasks (list): A list of tasks to display.
+    """
+    if not tasks:
+        console.print("[yellow]Your to-do list is empty.[/yellow]")
+        return
+
+    table = Table(title="To-Do List", show_header=True, header_style="bold cyan")
+    table.add_column("No.", justify="right", style="bold magenta", width=3)
+    table.add_column("Task", justify="left", style="bold white")
+    table.add_column("Priority", justify="center", style="bold blue")
+    table.add_column("Due Date", justify="center", style="bold yellow")
+    table.add_column("Status", justify="center", style="bold green")
+
+    for index, task in enumerate(tasks, 1):
+        status = "✅" if task.get('done') else "❌"
+        due_date = task.get('due_date', 'N/A')
+        table.add_row(str(index), task['task'], task['priority'], due_date, status)
+
+    console.print(table)
+
+# Add a task to the user's task list
+def add_task(user_data):
+    """Add a new task to the user's task list.
+
+    Args:
+        user_data (dict): A dictionary containing the user's data, including their tasks.
+    """
+    task = console.input("[cyan]Enter the task you want to add (e.g., 'Buy groceries'): [/cyan]")
+    while True:
+        priority = console.input("[cyan]Set priority (High/Medium/Low) [example: High]: [/cyan]").capitalize()
+        if priority in ["High", "Medium", "Low"]:
             break
         else:
-            print(RED + "Invalid choice, please try again." + RESET)
+            console.print("[red]Invalid priority! Please enter High, Medium, or Low.[/red]")
 
-# Run the main program
+    while True:
+        due_date = console.input("[cyan]Enter due date (YYYY-MM-DD) [example: 2024-10-15]: [/cyan]")
+        if validate_date(due_date):
+            break
+        else:
+            console.print("[red]Invalid date format! Please use YYYY-MM-DD.[/red]")
+
+    user_data['tasks'].append({'task': task, 'priority': priority, 'due_date': due_date, 'done': False})
+    console.print(f"[green]Task '{task}' added successfully![/green]")
+    save_users(users)  # Save after adding a task
+
+# Validate the date input
+def validate_date(date_text):
+    """Validate the format of a date string.
+
+    Args:
+        date_text (str): The date string to validate.
+
+    Returns:
+        bool: True if the date is valid, False otherwise.
+    """
+    try:
+        datetime.strptime(date_text, '%Y-%m-%d')
+        return True
+    except ValueError:
+        return False
+
+# Delete a task from the user's task list
+def delete_task(user_data):
+    """Delete a task from the user's task list.
+
+    Args:
+        user_data (dict): A dictionary containing the user's data, including their tasks.
+    """
+    show_tasks(user_data['tasks'])
+    if not user_data['tasks']:
+        return  # No tasks to delete
+
+    while True:
+        task_num = console.input("[cyan]Enter the task number to delete (e.g., '1'): [/cyan]")
+        if task_num.isdigit() and 1 <= int(task_num) <= len(user_data['tasks']):
+            removed_task = user_data['tasks'].pop(int(task_num) - 1)
+            console.print(f"[green]Task '{removed_task['task']}' deleted successfully![/green]")
+            save_users(users)  # Save after deleting a task
+            break
+        else:
+            console.print("[red]Invalid task number! Please try again.[/red]")
+
+# Mark a task as done
+def mark_done(user_data):
+    """Mark a task as done.
+
+    Args:
+        user_data (dict): A dictionary containing the user's data, including their tasks.
+    """
+    show_tasks(user_data['tasks'])
+    if not user_data['tasks']:
+        return  # No tasks to mark
+
+    while True:
+        task_num = console.input("[cyan]Enter the task number to mark as done (e.g., '1'): [/cyan]")
+        if task_num.isdigit() and 1 <= int(task_num) <= len(user_data['tasks']):
+            user_data['tasks'][int(task_num) - 1]['done'] = True
+            console.print(f"[green]Task {task_num} marked as done successfully![/green]")
+            save_users(users)  # Save after marking a task as done
+            break
+        else:
+            console.print("[red]Invalid task number! Please try again.[/red]")
+
+# Edit an existing task
+def edit_task(user_data):
+    """Edit an existing task in the user's task list.
+
+    Args:
+        user_data (dict): A dictionary containing the user's data, including their tasks.
+    """
+    show_tasks(user_data['tasks'])
+    if not user_data['tasks']:
+        return  # No tasks to edit
+
+    while True:
+        task_num = console.input("[cyan]Enter the task number to edit (e.g., '1'): [/cyan]")
+        if task_num.isdigit() and 1 <= int(task_num) <= len(user_data['tasks']):
+            task_index = int(task_num) - 1
+            task = user_data['tasks'][task_index]
+
+            console.print(f"[yellow]Editing Task: {task['task']} (Priority: {task['priority']}, Due Date: {task['due_date']})[/yellow]")
+            new_task = console.input("[cyan]Enter the new task description (leave blank to keep unchanged): [/cyan]")
+            if new_task:
+                task['task'] = new_task
+
+            while True:
+                new_priority = console.input("[cyan]Set new priority (High/Medium/Low, leave blank to keep unchanged): [/cyan]").capitalize()
+                if new_priority == "":
+                    break  # Keep existing priority
+                elif new_priority in ["High", "Medium", "Low"]:
+                    task['priority'] = new_priority
+                    break
+                else:
+                    console.print("[red]Invalid priority! Please enter High, Medium, or Low.[/red]")
+
+            while True:
+                new_due_date = console.input("[cyan]Enter new due date (YYYY-MM-DD, leave blank to keep unchanged): [/cyan]")
+                if new_due_date == "":
+                    break  # Keep existing due date
+                elif validate_date(new_due_date):
+                    task['due_date'] = new_due_date
+                    break
+                else:
+                    console.print("[red]Invalid date format! Please use YYYY-MM-DD.[/red]")
+
+            console.print(f"[green]Task updated successfully! New Details: '{task['task']}' (Priority: '{task['priority']}', Due Date: '{task['due_date']}')[/green]")
+            save_users(users)  # Save after editing a task
+            break
+        else:
+            console.print("[red]Invalid task number! Please try again.[/red]")
+
+# Filter tasks by priority
+def filter_tasks(user_data):
+    priority = console.input("[cyan]Enter priority to filter tasks (High/Medium/Low): [/cyan]").capitalize()
+    if priority not in ["High", "Medium", "Low"]:
+        console.print("[red]Invalid priority! Please enter High, Medium, or Low.[/red]")
+        return
+
+    filtered_tasks = [task for task in user_data['tasks'] if task['priority'] == priority]
+    if filtered_tasks:
+        console.print(f"[green]Tasks with '{priority}' priority:[/green]")
+        show_tasks(filtered_tasks)
+    else:
+        console.print(f"[yellow]No tasks found with {priority} priority.[/yellow]")
+
+# Search tasks by keyword
+def search_tasks(user_data):
+    keyword = console.input("[cyan]Enter keyword to search for tasks (e.g., 'groceries'): [/cyan]")
+    found_tasks = [task for task in user_data['tasks'] if keyword.lower() in task['task'].lower()]
+
+    if found_tasks:
+        console.print(f"[green]Found {len(found_tasks)} tasks matching your search:[/green]")
+        show_tasks(found_tasks)
+    else:
+        console.print("[yellow]No tasks found matching your search.[/yellow]")
+
+# Sort tasks by due date
+def sort_tasks_by_date(user_data):
+    user_data['tasks'].sort(key=lambda task: datetime.strptime(task['due_date'], '%Y-%m-%d'))
+
+# Main program loop
+def main():
+    """Run the task manager application.
+
+    This function handles user registration, login, and task management.
+    """
+    global users  # Use global variable to access users in nested functions
+    users = load_users()
+    console.print(ascii_art)
+
+    while True:
+        console.print("[bold cyan]1. Register[/bold cyan]")
+        console.print("[bold cyan]2. Login[/bold cyan]")
+        console.print("[bold cyan]3. Exit[/bold cyan]")
+
+        choice = console.input("[cyan]Choose an option (1-3): [/cyan]")
+        if choice == "1":
+            register(users)
+        elif choice == "2":
+            username = login(users)
+            user_data = users[username]  # Retrieve the logged-in user's data
+
+            while True:
+                console.print("[bold cyan]1. Add Task[/bold cyan]")
+                console.print("[bold cyan]2. Delete Task[/bold cyan]")
+                console.print("[bold cyan]3. Mark Task as Done[/bold cyan]")
+                console.print("[bold cyan]4. Edit Task[/bold cyan]")
+                console.print("[bold cyan]5. Show All Tasks[/bold cyan]")
+                console.print("[bold cyan]6. Filter Tasks by Priority[/bold cyan]")
+                console.print("[bold cyan]7. Search Tasks[/bold cyan]")
+                console.print("[bold cyan]8. Sort Tasks by Due Date[/bold cyan]")
+                console.print("[bold cyan]9. Logout[/bold cyan]")
+
+                user_choice = console.input("[cyan]Choose an option (1-9): [/cyan]")
+                if user_choice == "1":
+                    add_task(user_data)
+                elif user_choice == "2":
+                    delete_task(user_data)
+                elif user_choice == "3":
+                    mark_done(user_data)
+                elif user_choice == "4":
+                    edit_task(user_data)
+                elif user_choice == "5":
+                    show_tasks(user_data['tasks'])
+                elif user_choice == "6":
+                    filter_tasks(user_data)
+                elif user_choice == "7":
+                    search_tasks(user_data)
+                elif user_choice == "8":
+                    sort_tasks_by_date(user_data)
+                    console.print("[green]Tasks sorted by due date successfully![/green]")
+                    show_tasks(user_data['tasks'])
+                elif user_choice == "9":
+                    console.print("[green]Logging out...[/green]")
+                    break
+                else:
+                    console.print("[red]Invalid choice! Please choose a number between 1 and 9.[/red]")
+        elif choice == "3":
+            console.print("[green]Exiting the program.[/green]")
+            break
+        else:
+            console.print("[red]Invalid choice! Please choose a number between 1 and 3.[/red]")
+
 if __name__ == "__main__":
     main()
-    
