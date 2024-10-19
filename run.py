@@ -283,7 +283,9 @@ def filter_tasks(user_data):
 
 # Search tasks by keyword
 def search_tasks(user_data):
-    """
+    """ Search tasks list for a specific keyword.
+    This function is searching the task list according to a given keyword. If a user does not set a keyword 
+    the function returns the whole list and counts the empty spaces.
     """
     keyword = console.input("[cyan]Enter keyword to search for tasks (e.g., 'groceries'): [/cyan]")
     found_tasks = [task for task in user_data['tasks'] if keyword.lower() in task['task'].lower()]
@@ -296,13 +298,27 @@ def search_tasks(user_data):
 
 # Sort tasks by due date
 def sort_tasks_by_date(user_data):
+    """Sort the user's tasks by their due date.
+
+    This function sorts the tasks by the due date in ascending order. If a task has 'N/A' as the due date, 
+    it is treated as the maximum possible date for sorting purposes.
+
+    Args:
+        user_data (dict): A dictionary containing the user's data, including their tasks.
     """
-    """
-    user_data['tasks'].sort(key=lambda task: datetime.strptime(task['due_date'], '%Y-%m-%d'))
+    try:
+        user_data['tasks'].sort(key=lambda task: datetime.strptime(task['due_date'], '%Y-%m-%d') if task['due_date'] != 'N/A' else datetime.max)
+        console.print("[green]Tasks sorted by due date successfully![/green]")
+    except ValueError:
+        console.print("[red]Error sorting tasks. Some tasks may have invalid dates.[/red]")
+
 
 def clear_screen():
-    """
-    Clears the terminal screen.
+    """Clear the terminal screen.
+
+    This function clears the terminal screen for a cleaner interface,
+    taking into account different operating systems.
+
     """
     os.system('clear')  # For Linux/macOS
     # os.system('cls')  # Use this for Windows    
@@ -365,6 +381,7 @@ def main():
                 elif user_choice == "8":
                     sort_tasks_by_date(user_data)
                     console.print("[green]Tasks sorted by due date successfully![/green]")
+                    clear_screen()
                     show_tasks(user_data['tasks'])
                     
                 elif user_choice == "9":
