@@ -267,13 +267,11 @@ def edit_task(user_data):
 
 # Filter tasks by priority
 def filter_tasks(user_data):
-     """
-    Filter tasks based on their priority level.
-
+    """Filter tasks based on their priority level.
     This function prompts the user to enter a priority level (High, Medium, Low) and then
     filters the tasks that match the specified priority. The filtered tasks are displayed
     in a formatted table. If no tasks match the priority, a message is shown.
-
+    
     Args:
         user_data (dict): A dictionary containing the user's data, including their tasks.
     """
