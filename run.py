@@ -67,7 +67,7 @@ def register(users):
             continue
 
         if username in users:
-            console.print("[red]Username already exists. Please choose another.[/red]")
+            console.print("[red]Username already exists. Please choose another one.[/red]")
         else:
             while True:
                 password = console.input("[cyan]Enter a password: [/cyan]").strip()
