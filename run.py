@@ -35,7 +35,8 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('to-do_list')
 
 users = SHEET.worksheet("users")
-data = users.get_all_values()
+tasks = SHEET.worksheet("tasks")
+data = tasks.get_all_values()
 print(data)
 
 
