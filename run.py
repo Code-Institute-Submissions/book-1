@@ -399,7 +399,7 @@ def main():
             console.print("[green]Exiting the program.[/green]")
             break
         else:
-            console.print("[red]Invalid choice. Please choose a number between 1 and 3.[/red]")
+            console.print("[red]Invalid choice! Please choose a number between 1 and 3.[/red]")
 
 if __name__ == "__main__":
     main()
