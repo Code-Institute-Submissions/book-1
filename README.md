@@ -31,7 +31,7 @@ The deployment terminal is set to 80 columns by 24 rows. That means that each li
 
 Happy coding!
 
-# Summary
+## Summary
 
 * [Markdown-Table-of-Contents](#markdown-table-of-contents)
     * [Summary](#summary)
