@@ -31,12 +31,12 @@ The deployment terminal is set to 80 columns by 24 rows. That means that each li
 
 Happy coding!
 
-## Summary
+## User Stories
 
-* [Markdown-Table-of-Contents](#markdown-table-of-contents)
-    * [User stories](#user-stories)
-    * [What is it?](#what-is-it)
-    * [How does it work?](#how-does-it-work)
+* [User Stories](#user-stories)
+    * [First Time User](#first-time-user)
+    * [Frequent User](#frequent-user)
+* [How does it work?](#how-does-it-work)
     * [How to use it?](#how-to-use-it)
     * [CLI arguments](#cli-arguments)
     * [Specifications](#specifications)
@@ -44,6 +44,6 @@ Happy coding!
     * [License](#license)
 
 <!-- table of contents created by Adrian Bonnet, see https://github.com/Relex12/Markdown-Table-of-Contents for more -->
-## What is it?
+## First Time User
 
-## How does it work?
+## Frequent User
