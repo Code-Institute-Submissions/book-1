@@ -44,6 +44,6 @@ Happy coding!
     * [License](#license)
 
 <!-- table of contents created by Adrian Bonnet, see https://github.com/Relex12/Markdown-Table-of-Contents for more -->
-# What is it?
+## What is it?
 
-# How does it work?
+## How does it work?
