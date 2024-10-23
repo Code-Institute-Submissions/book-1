@@ -34,7 +34,7 @@ Happy coding!
 ## Summary
 
 * [Markdown-Table-of-Contents](#markdown-table-of-contents)
-    * [Summary](#summary)
+    * [User stories](#user-stories)
     * [What is it?](#what-is-it)
     * [How does it work?](#how-does-it-work)
     * [How to use it?](#how-to-use-it)
