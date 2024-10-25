@@ -84,13 +84,13 @@ def register(users):
         username = console.input("Enter a username: ").strip()
         if not username:
             console.print("[red]Username cannot be empty. Please enter a valid username.[/red]")
-            continue
-
-        if username in users:
+        elif len(username) < 4:
+            console.print("[red]Username must be at least 4 characters long. Please try again.[/red]")
+        elif username in users:
             console.print("[red]Username already exists. Please choose another one.[/red]")
         else:
             while True:
-                password = getpass.getpass("Enter a password (minimum 4 characters): ").strip()
+                password = getpass.getpass("Enter a password: ").strip()
                 if not password:
                     console.print("[red]Password cannot be empty. Please enter a valid password.[/red]")
                 elif len(password) < 4:
@@ -374,7 +374,7 @@ def main():
         console.print("[bold cyan]1. Register[/bold cyan]")
         console.print("[bold cyan]2. Login[/bold cyan]")
         console.print("[bold cyan]3. Exit[/bold cyan]")
-        choice = console.input("[cyan]Choose an option (1-3): [/cyan]")
+        choice = console.input("[cyan]Do you have an account? Choose an option (1-3): [/cyan]")
         clear_screen()
         if choice == "1":
             register(users)
