@@ -90,9 +90,11 @@ def register(users):
             console.print("[red]Username already exists. Please choose another one.[/red]")
         else:
             while True:
-                password = getpass.getpass("Enter a password: ").strip()
+                password = getpass.getpass("Enter a password (minimum 4 characters): ").strip()
                 if not password:
                     console.print("[red]Password cannot be empty. Please enter a valid password.[/red]")
+                elif len(password) < 4:
+                    console.print("[red]Password must be at least 4 characters long. Please try again.[/red]")
                 else:
                     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
                     users[username] = {'password': hashed_password.decode('utf-8'), 'tasks': []}
