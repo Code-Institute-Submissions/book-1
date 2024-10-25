@@ -248,7 +248,7 @@ def mark_done(user_data):
     """
     # Check if there are tasks to mark as done
     if not user_data.get('tasks'):
-        console.print("[yellow]No tasks available to mark as done.[/yellow]")
+        console.print("[yellow]No tasks available to mark as done. Please add a task first![/yellow]")
         return  # Exit if there are no tasks to mark
 
     show_tasks(user_data['tasks'])  # Display existing tasks for selection
@@ -438,10 +438,8 @@ def main():
                     delete_task(user_data)
                 elif user_choice == "3":
                     mark_done(user_data)
-                    clear_screen()
                 elif user_choice == "4":
                     edit_task(user_data)
-                    clear_screen()
                 elif user_choice == "5":
                     show_tasks(user_data['tasks'])
             
