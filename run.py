@@ -131,7 +131,6 @@ def login(users):
         else:
             console.print("[red]Invalid username or password. Please try again.[/red]")
 
-
 # Display tasks using a rich table
 def show_tasks(tasks):
     """Display the user's tasks in a formatted table.
@@ -374,6 +373,7 @@ def main():
         console.print("[bold cyan]2. Login[/bold cyan]")
         console.print("[bold cyan]3. Exit[/bold cyan]")
         choice = console.input("[cyan]Choose an option (1-3): [/cyan]")
+        clear_screen()
         if choice == "1":
             register(users)
         elif choice == "2":
@@ -391,14 +391,19 @@ def main():
                 console.print("[bold cyan]8. Tasks by Due Date[/bold cyan]")
                 console.print("[bold cyan]9. Logout[/bold cyan]")
                 user_choice = console.input("[cyan]Choose an option (1-9): [/cyan]")
+                clear_screen()
                 if user_choice == "1":
                     add_task(user_data)
+                    clear_screen()
                 elif user_choice == "2":
                     delete_task(user_data)
+                    clear_screen()
                 elif user_choice == "3":
                     mark_done(user_data)
+                    clear_screen()
                 elif user_choice == "4":
                     edit_task(user_data)
+                    clear_screen()
                 elif user_choice == "5":
                     show_tasks(user_data['tasks'])
             
@@ -411,6 +416,7 @@ def main():
                 elif user_choice == "8":
                     sort_tasks_by_date(user_data)
                     console.print("[green]Tasks sorted by due date successfully![/green]")
+                    clear_screen()
                     show_tasks(user_data['tasks'])
                     
                 elif user_choice == "9":
