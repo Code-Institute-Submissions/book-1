@@ -102,6 +102,7 @@ def register(users):
                     save_users(users)  # Save after registration
                     return
 
+
 # User login with password verification
 def login(users):
     """Log in an existing user.
@@ -117,16 +118,15 @@ def login(users):
     """
     while True:
         username = console.input("Enter your username: ").strip()
-        if not username:
-            console.print("[red]Username cannot be empty. Please enter a valid username.[/red]")
+        if len(username) < 4:
+            console.print("[red]Username must be at least 4 characters long. Please try again.[/red]")
             continue
 
         password = getpass.getpass("Enter your password: ").strip()
-        if not password:
-            console.print("[red]Password cannot be empty. Please enter a valid password.[/red]")
+        if len(password) < 4:
+            console.print("[red]Password must be at least 4 characters long. Please try again.[/red]")
             continue
 
-        # Check if username exists and password matches
         if username in users and bcrypt.checkpw(password.encode('utf-8'), users[username]['password'].encode('utf-8')):
             console.print(f"[green]Welcome back, {username}![/green]")
             return username
@@ -213,19 +213,31 @@ def delete_task(user_data):
     Args:
         user_data (dict): A dictionary containing the user's data, including their tasks.
     """
-    show_tasks(user_data['tasks'])
-    if not user_data['tasks']:
-        return  # No tasks to delete
+    # Check if the user has any tasks
+    if not user_data.get('tasks'):
+        console.print("[yellow]No tasks available to delete. Please Add a task![/yellow]")
+        return  # Exit if there are no tasks to delete
 
+    show_tasks(user_data['tasks'])  # Display existing tasks for selection
+
+    # Prompt the user to enter the task number to delete
     while True:
-        task_num = console.input("[cyan]Enter the task number to delete (e.g., '1'): [/cyan]")
+        task_num = console.input("[cyan]Enter the task number to delete (or type 'back' to cancel): [/cyan]").strip()
+
+        # Allow the user to go back without deleting
+        if task_num.lower() == 'back':
+            console.print("[yellow]Delete task operation cancelled.[/yellow]")
+            return
+
+        # Validate task number input
         if task_num.isdigit() and 1 <= int(task_num) <= len(user_data['tasks']):
+            # Perform task deletion
             removed_task = user_data['tasks'].pop(int(task_num) - 1)
             console.print(f"[green]Task '{removed_task['task']}' deleted successfully![/green]")
             save_users(users)  # Save after deleting a task
             break
         else:
-            console.print("[red]Invalid task number! Please try again.[/red]")
+            console.print("[red]Invalid task number! Please try again or type 'back' to cancel.[/red]")
 
 # Mark a task as done
 def mark_done(user_data):
@@ -234,19 +246,31 @@ def mark_done(user_data):
     Args:
         user_data (dict): A dictionary containing the user's data, including their tasks.
     """
-    show_tasks(user_data['tasks'])
-    if not user_data['tasks']:
-        return  # No tasks to mark
+    # Check if there are tasks to mark as done
+    if not user_data.get('tasks'):
+        console.print("[yellow]No tasks available to mark as done.[/yellow]")
+        return  # Exit if there are no tasks to mark
+
+    show_tasks(user_data['tasks'])  # Display existing tasks for selection
 
     while True:
-        task_num = console.input("[cyan]Enter the task number to mark as done (e.g., '1'): [/cyan]")
+        task_num = console.input("[cyan]Enter the task number to mark as done (or type 'back' to cancel): [/cyan]").strip()
+
+        # Allow the user to go back without marking
+        if task_num.lower() == 'back':
+            console.print("[yellow]Mark task operation cancelled.[/yellow]")
+            return
+
+        # Validate task number input
         if task_num.isdigit() and 1 <= int(task_num) <= len(user_data['tasks']):
+            # Mark the task as done
             user_data['tasks'][int(task_num) - 1]['done'] = True
-            console.print(f"[green]Task {task_num} marked as done successfully![/green]")
+            console.print(f"[green]Task '{user_data['tasks'][int(task_num) - 1]['task']}' marked as done successfully![/green]")
             save_users(users)  # Save after marking a task as done
             break
         else:
-            console.print("[red]Invalid task number! Please try again.[/red]")
+            console.print("[red]Invalid task number! Please try again or type 'back' to cancel.[/red]")
+
 
 # Edit an existing task
 def edit_task(user_data):
@@ -255,12 +279,22 @@ def edit_task(user_data):
     Args:
         user_data (dict): A dictionary containing the user's data, including their tasks.
     """
-    show_tasks(user_data['tasks'])
-    if not user_data['tasks']:
-        return  # No tasks to edit
+    # Check if there are tasks to edit
+    if not user_data.get('tasks'):
+        console.print("[yellow]No tasks available to edit. Please add a task first.[/yellow]")
+        return  # Exit if there are no tasks to edit
+
+    show_tasks(user_data['tasks'])  # Display existing tasks for selection
 
     while True:
-        task_num = console.input("[cyan]Enter the task number to edit (e.g., '1'): [/cyan]")
+        task_num = console.input("[cyan]Enter the task number to edit (or type 'back' to cancel): [/cyan]").strip()
+
+        # Allow the user to go back without editing
+        if task_num.lower() == 'back':
+            console.print("[yellow]Edit task operation cancelled.[/yellow]")
+            return
+
+        # Validate task number input
         if task_num.isdigit() and 1 <= int(task_num) <= len(user_data['tasks']):
             task_index = int(task_num) - 1
             task = user_data['tasks'][task_index]
@@ -294,7 +328,8 @@ def edit_task(user_data):
             save_users(users)  # Save after editing a task
             break
         else:
-            console.print("[red]Invalid task number! Please try again.[/red]")
+            console.print("[red]Invalid task number! Please try again or type 'back' to cancel.[/red]")
+            
 
 # Filter tasks by priority
 def filter_tasks(user_data):
@@ -371,10 +406,11 @@ def main():
     console.print(ascii_art)
 
     while True:
+        console.print("[cyan]Do you have an account?[cyan]")
         console.print("[bold cyan]1. Register[/bold cyan]")
         console.print("[bold cyan]2. Login[/bold cyan]")
         console.print("[bold cyan]3. Exit[/bold cyan]")
-        choice = console.input("[cyan]Do you have an account? Choose an option (1-3): [/cyan]")
+        choice = console.input("[cyan]Choose an option (1-3): [/cyan]")
         clear_screen()
         if choice == "1":
             register(users)
@@ -383,6 +419,7 @@ def main():
             user_data = users[username]  # Retrieve the logged-in user's data
 
             while True:
+                console.print("[cyan]To-Do List Main Menu:[cyan]")
                 console.print("[bold cyan]1. Add Task[/bold cyan]")
                 console.print("[bold cyan]2. Delete Task[/bold cyan]")
                 console.print("[bold cyan]3. Mark Task[/bold cyan]")
@@ -399,7 +436,6 @@ def main():
                     clear_screen()
                 elif user_choice == "2":
                     delete_task(user_data)
-                    clear_screen()
                 elif user_choice == "3":
                     mark_done(user_data)
                     clear_screen()
@@ -422,7 +458,7 @@ def main():
                     show_tasks(user_data['tasks'])
                     
                 elif user_choice == "9":
-                    console.print("[green]Logging out...[/green]")
+                    console.print("[green]You successfully logged out...[/green]")
                     break
                 else:
                     console.print("[red]Invalid choice! Please choose a number between 1 and 9.[/red]")
