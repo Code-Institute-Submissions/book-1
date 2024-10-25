@@ -7,10 +7,9 @@
        * [Description](#description)
        * [Purpose](#purpose)
        * [User Demographic](#user-demographic)
-   * [How to use the app?](#how-to-use-the-app)
    * [Existing Features](#existing-features)
    * [Data Model](#data-model)
-   * [Testing](#testing)
+   * [Manual Testing](#manual-testing)
    * [Deployment](#deployment)
    * [Credits](#credits)
 
@@ -23,4 +22,12 @@
 
 ### User Demographic
 
-## How to use the app?
+## Existing Features
+
+## Data Model
+
+## Manual Testing
+
+## Deployment
+
+## Credits
