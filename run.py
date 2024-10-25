@@ -114,13 +114,23 @@ def login(users):
         ValueError: If the username or password is invalid.
     """
     while True:
-        username = console.input("Enter your username: ")
-        password = getpass.getpass("Enter your password: ").encode('utf-8')
-        if username in users and bcrypt.checkpw(password, users[username]['password'].encode('utf-8')):
+        username = console.input("Enter your username: ").strip()
+        if not username:
+            console.print("[red]Username cannot be empty. Please enter a valid username.[/red]")
+            continue
+
+        password = getpass.getpass("Enter your password: ").strip()
+        if not password:
+            console.print("[red]Password cannot be empty. Please enter a valid password.[/red]")
+            continue
+
+        # Check if username exists and password matches
+        if username in users and bcrypt.checkpw(password.encode('utf-8'), users[username]['password'].encode('utf-8')):
             console.print(f"[green]Welcome back, {username}![/green]")
             return username
         else:
             console.print("[red]Invalid username or password. Please try again.[/red]")
+
 
 # Display tasks using a rich table
 def show_tasks(tasks):
@@ -364,7 +374,6 @@ def main():
         console.print("[bold cyan]2. Login[/bold cyan]")
         console.print("[bold cyan]3. Exit[/bold cyan]")
         choice = console.input("[cyan]Choose an option (1-3): [/cyan]")
-        clear_screen()
         if choice == "1":
             register(users)
         elif choice == "2":
@@ -382,19 +391,14 @@ def main():
                 console.print("[bold cyan]8. Tasks by Due Date[/bold cyan]")
                 console.print("[bold cyan]9. Logout[/bold cyan]")
                 user_choice = console.input("[cyan]Choose an option (1-9): [/cyan]")
-                clear_screen()
                 if user_choice == "1":
                     add_task(user_data)
-                    clear_screen()
                 elif user_choice == "2":
                     delete_task(user_data)
-                    clear_screen()
                 elif user_choice == "3":
                     mark_done(user_data)
-                    clear_screen()
                 elif user_choice == "4":
                     edit_task(user_data)
-                    clear_screen()
                 elif user_choice == "5":
                     show_tasks(user_data['tasks'])
             
@@ -407,7 +411,6 @@ def main():
                 elif user_choice == "8":
                     sort_tasks_by_date(user_data)
                     console.print("[green]Tasks sorted by due date successfully![/green]")
-                    clear_screen()
                     show_tasks(user_data['tasks'])
                     
                 elif user_choice == "9":
