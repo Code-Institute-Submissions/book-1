@@ -71,8 +71,34 @@ To visualize the necessary steps to create the to-do list manager, I created the
 
 ![Flowchart](images/flowchart.jpeg)
 
-
 ## Existing Features
+
+### Welcome screen
+On the welcome screen, ASCII Art with the name of the application is displayed. Underneath the welcome message, the user can decide whether they want to register, login, or exit the program. The input is validated to be either 1, 2 or 3.
+
+### Register
+Users have to create an account in order to be able to store and view their to-do list tasks. A username and password have to be entered. After validation, they are stored in a .json file and the user is redirected to the Login. The username is validated to have at least 4 characters and is stored as all lowercase. Furthermore, the method ensures that the username is not taken. The password has to be at least 4 characters long as well. The user can enter exit the program instead of creating an account or logging in. 
+
+### Login
+A user that already created an account can log in by entering their username and password. The method validates the input by checking if the username exists in the users.json file and if the password that is entered is identical to the one stored. For security reasons, I used getpass to hide the input while typing in the password. The user should finish the process before he/she enters the main menu screen.
+
+### Add Task
+
+### Delete Task
+
+### Mark Task
+
+### Edit Task
+
+### Show All Tasks
+
+### Tasks by Priority
+
+### Keyword Search
+
+### Tasks by Due Date
+
+### Logout
 
 ## Data Model
 
