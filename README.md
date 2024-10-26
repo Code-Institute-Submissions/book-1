@@ -17,6 +17,7 @@ The test user already contains a list of to-do tasks. Of course, you can also cr
        * [Description](#description)
        * [Purpose](#purpose)
        * [User Demographic](#user-demographic)
+       * [Flowchart](#flowchart)
    * [Existing Features](#existing-features)
    * [Data Model](#data-model)
    * [Manual Testing](#manual-testing)
@@ -61,6 +62,11 @@ The target audience for this Python-based task manager includes i) **Developers 
 - **Uncover**: handle large amounts of to-do list tasks that can be sorted by due date and priority level for easy tracking
 - **Filter**: search effortlessly for specific tasks by keyword.
 - **Upcycle**: focus on the program's reliability, responsiveness, and fast performance for all my to-do list tasks.
+
+### Flowchart
+To visualize the necessary steps to create the to-do list manager, I created a flowchart using [Lucidchart](https://www.lucidchart.com/).
+![Flowchart](images/flowchart.jpeg)
+
 
 ## Existing Features
 
