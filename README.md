@@ -19,6 +19,18 @@ The test user already contains a list of to-do tasks. Of course, you can also cr
        * [User Demographic](#user-demographic)
        * [Flowchart](#flowchart)
    * [Existing Features](#existing-features)
+       * [Welcome screen](#welcome-screen)
+       * [Register](#register)
+       * [Login](#login)
+       * [Add Task](#add-task)
+       * [Delete Task](#delete-task)
+       * [Mark Task](#mark-task)
+       * [Edit Task](#edit-task)
+       * [Show All Tasks](#show-all-tasks)
+       * [Tasks by Priority](#tasks-by-priority)
+       * [Keyword Search](#keyword-search)
+       * [Tasks by Due Date](#tasks-by-due-date)
+       * [Logout](#logout)
    * [Data Model](#data-model)
    * [Manual Testing](#manual-testing)
    * [Deployment](#deployment)
@@ -78,6 +90,8 @@ On the welcome screen, ASCII Art with the name of the application is displayed. 
 
 ### Register
 Users have to create an account in order to be able to store and view their to-do list tasks. A username and password have to be entered. After validation, they are stored in a .json file and the user is redirected to the Login. The username is validated to have at least 4 characters and is stored as all lowercase. Furthermore, the method ensures that the username is not taken. The password has to be at least 4 characters long as well. The user can enter exit the program instead of creating an account or logging in. 
+
+![Register](images/register.gif)
 
 ### Login
 A user that already created an account can log in by entering their username and password. The method validates the input by checking if the username exists in the users.json file and if the password that is entered is identical to the one stored. For security reasons, I used getpass to hide the input while typing in the password. The user should finish the process before he/she enters the main menu screen.
