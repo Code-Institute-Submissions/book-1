@@ -29,6 +29,7 @@ The test user already contains a list of to-do tasks. Of course, you can also cr
 ## Introduction
 
 ### Description
+Here are the key features of this Python-based task manager (must-have):
 - Task Management: Allow users to add, edit, delete, and mark tasks as done, keeping track of priority levels, due dates, and completion status.
 
 - User Authentication and Data Security: Ensure data privacy and security by implementing a login system with secure password hashing. This allows multiple users to maintain separate task lists and prevents unauthorized access.
@@ -41,14 +42,7 @@ The test user already contains a list of to-do tasks. Of course, you can also cr
 The purpose of this project is to create a command-line task manager that enables users to manage their personal to-do lists with ease. Designed for simplicity and security, the application offers a robust feature set within a user-friendly interface. This tool is ideal for users who prefer a straightforward, text-based task manager and who value control over their task lists without relying on external applications or GUIs. It’s a foundational project for learning about user authentication, data management, and creating interactive command-line applications.
 
 ### User Demographic
-The target audience for this Python-based task manager includes: 
-- Developers and Tech Enthusiasts: Users comfortable with command-line interfaces who prefer minimalistic, non-GUI tools for personal productivity.
-- Beginner Programmers: Individuals looking to learn how to manage data, implement secure password hashing, and build interactive CLI applications in Python.
-- Productivity-Focused Individuals: People who enjoy organizing tasks and managing to-do lists, especially those who want a lightweight, distraction-free solution that doesn’t rely on complex software or internet access.
-- Privacy-Conscious Users: Users who prefer a personal, offline task manager without cloud dependencies, ensuring their task data stays on their device.
-- Students and Educators: Individuals in educational environments, where such a program can serve as a project to learn about user data handling, file I/O, and secure password management.
-
-
+The target audience for this Python-based task manager includes i) **Developers and Tech Enthusiasts**: Users comfortable with command-line interfaces who prefer minimalistic, non-GUI tools for personal productivity, ii) **Beginner Programmers**: Individuals looking to learn how to manage data, implement secure password hashing, and build interactive CLI applications in Python, iii) **Productivity-Focused Individuals**: People who enjoy organizing tasks and managing to-do lists, especially those who want a lightweight, distraction-free solution that doesn’t rely on complex software or internet access, iv) **Privacy-Conscious Users**: Users who prefer a personal, offline task manager without cloud dependencies, ensuring their task data stays on their device, and finally v) **Students and Educators**: Individuals in educational environments, where such a program can serve as a project to learn about user data handling, file I/O, and secure password management.
 
 ## Existing Features
 
