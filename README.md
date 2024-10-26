@@ -15,7 +15,17 @@ The test user already contains a list of to-do tasks. Of course, you can also cr
    * [Table of Contents](#table-of-contents)
    * [Introduction](#introduction)
        * [Description](#description)
+       - Task Management: Allow users to add, edit, delete, and mark tasks as done, keeping track of priority levels, due dates, and completion status.
+
+       - User Authentication and Data Security: Ensure data privacy and security by implementing a login system with secure password hashing. This allows multiple users to maintain separate task lists and prevents unauthorized access.
+
+       - Data Persistence: Enable data persistence across sessions using JSON, so users can retain their task lists between uses of the program.
+
+       - CLI-based Usability: Make the tool accessible from the command line with intuitive menu navigation, styled with Rich for an improved CLI experience.
        * [Purpose](#purpose)
+       
+       The purpose of this project is to create a command-line task manager that enables users to manage their personal to-do lists with ease. Designed for simplicity and security, the application offers a robust feature set within a user-friendly interface. This tool is ideal for users who prefer a straightforward, text-based task manager and who value control over their task lists without relying on external applications or GUIs. It’s a foundational project for learning about user authentication, data management, and creating interactive command-line applications.
+       
        * [User Demographic](#user-demographic)
    * [Existing Features](#existing-features)
    * [Data Model](#data-model)
