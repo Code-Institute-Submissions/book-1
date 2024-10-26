@@ -64,7 +64,11 @@ The target audience for this Python-based task manager includes i) **Developers 
 - **Upcycle**: focus on the program's reliability, responsiveness, and fast performance for all my to-do list tasks.
 
 ### Flowchart
-To visualize the necessary steps to create the to-do list manager, I created a flowchart using [Lucidchart](https://www.lucidchart.com/).
+
+The particular flowchart visually represents the sequence of steps, decisions, and processes involved before the development stage. I tried to break down complex processes into clear, manageable steps, making it easier to understand and follow. By mapping out each step, the graph helped me identify inefficiencies, redundancies, or potential problem areas in the workflow and the program logic. The relevant flowchart acts as blueprint, guiding the coding and debugging process and making it easier to maintain and update the system later. It also serves as documentation for how the program or the system works, which is helpful for future reference, onboarding new team members, or explaining the system to non-technical users. Additionally, I wanted to generate a graph that provides a common visual language for all stakeholders (developers, users, managers, etc.), facilitating clear communication about how a process works or how a program functions. 
+
+To visualize the necessary steps to create the to-do list manager, I created the flowchart below using [Lucidchart](https://www.lucidchart.com/) in order to map out logic in decision-making, loops, input/output operations, and error handling, providing a clear overview before diving into coding.
+
 ![Flowchart](images/flowchart.jpeg)
 
 
