@@ -2,6 +2,12 @@
 **To-Do List** is a command-line interface (CLI) for a simple to-do list manager with user registration, login, and various task management functions. It utilizes JSON to store user data, bcrypt for password hashing, and Rich for styled CLI output. Key features include: i) *User Authentication*: Users can register or log in, with passwords stored securely in hashed form, ii) *Task Management*: Users can add, delete, edit, and mark tasks as done, iii) *Filtering and Searching*: Tasks can be filtered by priority or searched by keyword, iv) *Sorting*: Tasks can be sorted by due date for easy tracking, v) *Data Persistence*: User and task data are saved in a JSON file for data persistence across sessions. The program uses Rich library for enhanced CLI visuals and offers a menu-driven interface for ease of use. The main loop allows users to interact with tasks until they choose to log out or exit the program.
 
 To test the application use the following user data to login:
+- username: **evanthia**
+- password: **123456**
+
+The test user already contains a list of to-do tasks. Of course, you can also create a new user and add your own tasks.
+
+[Link to live project](https://to-do-list-mgmt-80fbcde49609.herokuapp.com/)
 
 ![To-Do List](images/welcome.png)
 
