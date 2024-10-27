@@ -281,176 +281,118 @@ def mark_done(user_data):
             console.print("[red]Invalid task number! Please try again or type 'back' to cancel.[/red]")
 
 
+# Edit an existing task
 def edit_task(user_data):
     """Edit an existing task in the user's task list.
 
     Args:
         user_data (dict): A dictionary containing the user's data, including their tasks.
     """
-    if not user_data['tasks']:
-        console.print("[yellow]No tasks to edit. Please add a task first.[/yellow]")
-        return
+    # Check if there are tasks to edit
+    if not user_data.get('tasks'):
+        console.print("[yellow]No tasks available to edit. Please add a task first.[/yellow]")
+        return  # Exit if there are no tasks to edit
 
-    # Display tasks in a table format
-    table = Table(title="Task List")
+    show_tasks(user_data['tasks'])  # Display existing tasks for selection
 
-    table.add_column("No.", justify="center", style="cyan", no_wrap=True)
-    table.add_column("Task", style="magenta")
-    table.add_column("Priority", justify="center", style="green")
-    table.add_column("Due Date", justify="center", style="yellow")
-
-    for idx, task in enumerate(user_data['tasks'], 1):
-        table.add_row(str(idx), task['task'], task['priority'], task['due_date'])
-
-    console.print(table)
-
-    # Select the task to edit
     while True:
-        try:
-            task_num = int(console.input("[cyan]Enter the task number you want to edit: [/cyan]"))
-            if 1 <= task_num <= len(user_data['tasks']):
-                selected_task = user_data['tasks'][task_num - 1]
-                break
-            else:
-                console.print("[red]Invalid task number! Please enter a valid task number.[/red]")
-        except ValueError:
-            console.print("[red]Please enter a valid number.[/red]")
+        task_num = console.input("[cyan]Enter the task number to edit (or type 'back' to cancel): [/cyan]").strip()
 
-    # Update task name
-    while True:
-        new_task_name = console.input(f"[cyan]Enter new name for the task '{selected_task['task']}': [/cyan]").strip()
-        if not new_task_name or not new_task_name.replace(' ', '').isalpha():
-            console.print("[red]Task name cannot be blank, contain numbers, or special characters! Only alphabetic characters allowed.[/red]")
-        else:
-            selected_task['task'] = new_task_name
-            break
+        # Allow the user to go back without editing
+        if task_num.lower() == 'back':
+            console.print("[yellow]Edit task operation cancelled.[/yellow]")
+            return
 
-    # Update priority
-    while True:
-        new_priority = console.input("[cyan]Set new priority (High/Medium/Low): [/cyan]").capitalize()
-        if new_priority in ["High", "Medium", "Low"]:
-            selected_task['priority'] = new_priority
-            break
-        else:
-            console.print("[red]Invalid priority! Please enter High, Medium, or Low.[/red]")
+        # Validate task number input
+        if task_num.isdigit() and 1 <= int(task_num) <= len(user_data['tasks']):
+            task_index = int(task_num) - 1
+            task = user_data['tasks'][task_index]
 
-    # Update due date
-    while True:
-        new_due_date = console.input("[cyan]Enter new due date (YYYY-MM-DD): [/cyan]")
-        if validate_date(new_due_date):
-            selected_task['due_date'] = new_due_date
+            console.print(f"[yellow]Editing Task: {task['task']} (Priority: {task['priority']}, Due Date: {task['due_date']})[/yellow]")
+            new_task = console.input("[cyan]Enter the new task description (leave blank to keep unchanged): [/cyan]")
+            if new_task:
+                task['task'] = new_task
+
+            while True:
+                new_priority = console.input("[cyan]Set new priority (High/Medium/Low, leave blank to keep unchanged): [/cyan]").capitalize()
+                if new_priority == "":
+                    break  # Keep existing priority
+                elif new_priority in ["High", "Medium", "Low"]:
+                    task['priority'] = new_priority
+                    break
+                else:
+                    console.print("[red]Invalid priority! Please enter High, Medium, or Low.[/red]")
+
+            while True:
+                new_due_date = console.input("[cyan]Enter new due date (YYYY-MM-DD, leave blank to keep unchanged): [/cyan]")
+                if new_due_date == "":
+                    break  # Keep existing due date
+                elif validate_date(new_due_date):
+                    task['due_date'] = new_due_date
+                    break
+                else:
+                    console.print("[red]Invalid date format! Please use YYYY-MM-DD.[/red]")
+
+            console.print(f"[green]Task updated successfully! New Details: '{task['task']}' (Priority: '{task['priority']}', Due Date: '{task['due_date']}')[/green]")
+            save_users(users)  # Save after editing a task
             break
         else:
-            console.print("[red]Invalid date format! Please use YYYY-MM-DD.[/red]")
-
-    console.print(f"[green]Task '{selected_task['task']}' updated successfully![/green]")
-    save_users(users)  # Save after editing a task
+            console.print("[red]Invalid task number! Please try again or type 'back' to cancel.[/red]")
             
 
+# Filter tasks by priority
 def filter_tasks(user_data):
-    """Filter tasks based on a specified priority and display them in a table format.
-
+    """Filter tasks based on their priority level.
+    This function prompts the user to enter a priority level (High, Medium, Low) and then
+    filters the tasks that match the specified priority. The filtered tasks are displayed
+    in a formatted table. If no tasks match the priority, a message is shown.
+    
     Args:
         user_data (dict): A dictionary containing the user's data, including their tasks.
     """
-    # Check if there are tasks available
-    if not user_data['tasks']:
-        console.print("[yellow]No tasks available to filter.[/yellow]")
-        return
-
-    # Prompt user for priority to filter tasks
     priority = console.input("[cyan]Enter priority to filter tasks (High/Medium/Low): [/cyan]").capitalize()
     if priority not in ["High", "Medium", "Low"]:
         console.print("[red]Invalid priority! Please enter High, Medium, or Low.[/red]")
         return
 
-    # Filter tasks by priority
     filtered_tasks = [task for task in user_data['tasks'] if task['priority'] == priority]
+    if filtered_tasks:
+        console.print(f"[green]Tasks with '{priority}' priority:[/green]")
+        show_tasks(filtered_tasks)
+    else:
+        console.print(f"[yellow]No tasks found with {priority} priority.[/yellow]")
 
-    if not filtered_tasks:
-        console.print(f"[yellow]No tasks found with '{priority}' priority.[/yellow]")
-        return
-
-    # Display filtered tasks in a table format
-    table = Table(title=f"Tasks with '{priority}' Priority")
-
-    table.add_column("No.", justify="center", style="cyan", no_wrap=True)
-    table.add_column("Task", style="magenta")
-    table.add_column("Priority", justify="center", style="green")
-    table.add_column("Due Date", justify="center", style="yellow")
-
-    for idx, task in enumerate(filtered_tasks, 1):
-        table.add_row(str(idx), task['task'], task['priority'], task['due_date'])
-
-    console.print(table)
-
+# Search tasks by keyword
 def search_tasks(user_data):
-    """Search tasks based on a keyword and display matching tasks in a table format.
-
-    Args:
-        user_data (dict): A dictionary containing the user's data, including their tasks.
+    """ Search tasks list for a specific keyword.
+    This function is searching the task list according to a given keyword. If a user does not set a keyword 
+    the function returns the whole list and counts the empty spaces.
     """
-    # Check if there are tasks available
-    if not user_data['tasks']:
-        console.print("[yellow]No tasks available to search.[/yellow]")
-        return
+    keyword = console.input("[cyan]Enter keyword to search for tasks (e.g., 'groceries'): [/cyan]")
+    found_tasks = [task for task in user_data['tasks'] if keyword.lower() in task['task'].lower()]
 
-    # Prompt user for a search keyword
-    keyword = console.input("[cyan]Enter keyword to search tasks: [/cyan]").strip()
-    if not keyword:
-        console.print("[red]Keyword cannot be blank.[/red]")
-        return
+    if found_tasks:
+        console.print(f"[green]Found {len(found_tasks)} tasks matching your search:[/green]")
+        show_tasks(found_tasks)
+    else:
+        console.print("[yellow]No tasks found matching your search.[/yellow]")
 
-    # Filter tasks by keyword
-    matching_tasks = [task for task in user_data['tasks'] if keyword.lower() in task['task'].lower()]
-
-    if not matching_tasks:
-        console.print(f"[yellow]No tasks found matching '{keyword}'.[/yellow]")
-        return
-
-    # Display matching tasks in a table format
-    table = Table(title=f"Tasks Matching '{keyword}'")
-
-    table.add_column("No.", justify="center", style="cyan", no_wrap=True)
-    table.add_column("Task", style="magenta")
-    table.add_column("Priority", justify="center", style="green")
-    table.add_column("Due Date", justify="center", style="yellow")
-
-    for idx, task in enumerate(matching_tasks, 1):
-        table.add_row(str(idx), task['task'], task['priority'], task['due_date'])
-
-    console.print(table)
-
+# Sort tasks by due date
 def sort_tasks_by_date(user_data):
-    """Sort tasks by due date and display them in a table format.
+    """Sort the user's tasks by their due date.
+
+    This function sorts the tasks by the due date in ascending order. If a task has 'N/A' as the due date, 
+    it is treated as the maximum possible date for sorting purposes.
 
     Args:
         user_data (dict): A dictionary containing the user's data, including their tasks.
     """
-    # Check if there are tasks available
-    if not user_data['tasks']:
-        console.print("[yellow]No tasks available to sort.[/yellow]")
-        return
-
-    # Sort tasks by due date
     try:
-        sorted_tasks = sorted(user_data['tasks'], key=lambda x: datetime.strptime(x['due_date'], "%Y-%m-%d"))
+        user_data['tasks'].sort(key=lambda task: datetime.strptime(task['due_date'], '%Y-%m-%d') if task['due_date'] != 'N/A' else datetime.max)
+        console.print("[green]Tasks sorted by due date successfully![/green]")
     except ValueError:
-        console.print("[red]Error: One or more due dates are not in the correct format (YYYY-MM-DD).[/red]")
-        return
+        console.print("[red]Error sorting tasks. Some tasks may have invalid dates.[/red]")
 
-    # Display sorted tasks in a table format
-    table = Table(title="Sorted Tasks by Due Date")
-
-    table.add_column("No.", justify="center", style="cyan", no_wrap=True)
-    table.add_column("Task", style="magenta")
-    table.add_column("Priority", justify="center", style="green")
-    table.add_column("Due Date", justify="center", style="yellow")
-
-    for idx, task in enumerate(sorted_tasks, 1):
-        table.add_row(str(idx), task['task'], task['priority'], task['due_date'])
-
-    console.print(table)
 
 def clear_screen():
     """Clear the terminal screen.
