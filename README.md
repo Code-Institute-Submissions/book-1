@@ -139,12 +139,18 @@ Additionally, the program offers the function of keyword searching. The user has
 ### Tasks by Due Date
 This function is optional but I added the a method of filtering tasks by due date in the main menu. The particular method returns all tasks ordered by date. By default the program stores the tasks with random dates, however if the user selects the 'Tasks by Priority' function can view the results ordered by date.
 
+![Tasks by Due Date](images/date.gif)
+
 ### Logout
 Once the user has explored the to-do list application, can easily logout from the program by selecting the relevant option from the main menu. The application further gives the option to end the program by selecting the exit option from the initial menu.
 
 ![Logout](images/logout.gif)
 
 ### Future Enhancements
+The project is ready for production and has implemented all the planned features. Some additions I would like to make to this application in the future are:
+
+- Connect the program to a real database instead of the worksheets.
+- Make the to-do list downloadable and convert it to a PDF file. After doing some research, I think it should be possible to convert a to-do list to a PDF file the user can download. However, that is a project for the future and no necessary feature for this project.
 
 ## Manual Testing
 
