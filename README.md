@@ -101,14 +101,29 @@ A user that already created an account can log in by entering their username and
 ![Login](images/login.gif)
 
 ### Add Task
+A user that already has an account can easily add a task to the to-do tasks list. The method validates the input by checking if the task name has the correct description (no empty spaces or numbers are allowed to describe the task), priority level and due date. Then the task appears to the task table list created with rich library for a comprehensive user interface.
+
+![Add Task](images/add-task.gif)
 
 ### Delete Task
+A user that already has an account can easily delete a task from the to-do tasks list. If the to-do list is empty, the program notifies via the terminal the user accordingly. In order to delete a task, the user should type the correct task number from the table provided. In order to confirm that the task is successfully deleted the user should view all tasks.
+
+![Delete Task](images/delete-task.gif)
 
 ### Mark Task
+A user that already has an account can easily mark a task as done from the to-do list. To do so the user has to make sure that tasks have been added to the to-do list. If the to-do list is empty, the program notifies via the terminal the user accordingly. In order to confirm that the task is successfully marked as done the user should view all tasks. 
+
+![Mark Task](images/mark_task.gif)
 
 ### Edit Task
+A user that already has an account can easily edit a task from the to-do list. To do so the user has to make sure that tasks have been added to the to-do list. If the to-do list is empty, the program notifies via the terminal the user accordingly. In order to confirm that the task is successfully edited, the user should view all tasks. The method validates the input by checking if the task name, priority level and due date all have the correct format.
+
+![Edit Task](images/edit-task.gif)
 
 ### Show All Tasks
+A user that already has an account can easily view all tasks from the to-do list. To do so the user has to make sure that tasks have been added to the to-do list. The method validates the input by checking if the choice is included between the desired numerical range.
+
+![Show All Tasks](images/show-all.gif)
 
 ### Tasks by Priority
 
