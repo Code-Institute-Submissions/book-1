@@ -137,7 +137,7 @@ Additionally, the program offers the function of keyword searching. The user has
 ![Keyword Search](images/keyword-search.gif)
 
 ### Tasks by Due Date
-This function is optional but I added the a method of filtering tasks by due date in the main menu. The particular method returns all tasks ordered by date to-date.
+This function is optional but I added the a method of filtering tasks by due date in the main menu. The particular method returns all tasks ordered by date. By default the program stores the tasks with random dates, however if the user selects the 'Tasks by Priority' function can view the results ordered by date.
 
 ### Logout
 Once the user has explored the to-do list application, can easily logout from the program by selecting the relevant option from the main menu. The application further gives the option to end the program by selecting the exit option from the initial menu.

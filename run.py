@@ -421,36 +421,21 @@ def search_tasks(user_data):
 
     console.print(table)
 
+# Sort tasks by due date
 def sort_tasks_by_date(user_data):
-    """Sort tasks by due date and display them in a table format.
+    """Sort the user's tasks by their due date.
+
+    This function sorts the tasks by the due date in ascending order. If a task has 'N/A' as the due date, 
+    it is treated as the maximum possible date for sorting purposes.
 
     Args:
         user_data (dict): A dictionary containing the user's data, including their tasks.
     """
-    # Check if there are tasks available
-    if not user_data['tasks']:
-        console.print("[yellow]No tasks available to sort.[/yellow]")
-        return
-
-    # Sort tasks by due date
     try:
-        sorted_tasks = sorted(user_data['tasks'], key=lambda x: datetime.strptime(x['due_date'], "%Y-%m-%d"))
+        user_data['tasks'].sort(key=lambda task: datetime.strptime(task['due_date'], '%Y-%m-%d') if task['due_date'] != 'N/A' else datetime.max)
+        console.print("[green]Tasks sorted by due date successfully![/green]")
     except ValueError:
-        console.print("[red]Error: One or more due dates are not in the correct format (YYYY-MM-DD).[/red]")
-        return
-
-    # Display sorted tasks in a table format
-    table = Table(title="Sorted Tasks by Due Date")
-
-    table.add_column("No.", justify="center", style="cyan", no_wrap=True)
-    table.add_column("Task", style="magenta")
-    table.add_column("Priority", justify="center", style="green")
-    table.add_column("Due Date", justify="center", style="yellow")
-
-    for idx, task in enumerate(sorted_tasks, 1):
-        table.add_row(str(idx), task['task'], task['priority'], task['due_date'])
-
-    console.print(table)
+        console.print("[red]Error sorting tasks. Some tasks may have invalid dates.[/red]")
 
 def clear_screen():
     """Clear the terminal screen.
