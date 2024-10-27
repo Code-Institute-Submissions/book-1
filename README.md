@@ -31,6 +31,7 @@ The test user already contains a list of to-do tasks. Of course, you can also cr
        * [Keyword Search](#keyword-search)
        * [Tasks by Due Date](#tasks-by-due-date)
        * [Logout](#logout)
+       * [Future Enhancements](#future-enhancements)
    * [Data Model](#data-model)
    * [Manual Testing](#manual-testing)
    * [Deployment](#deployment)
@@ -126,12 +127,24 @@ A user that already has an account can easily view all tasks from the to-do list
 ![Show All Tasks](images/show-all.gif)
 
 ### Tasks by Priority
+A user that already has an account can easily filter tasks by priority level. To do so the user has to make sure that tasks have been added to the to-do list. From the main menu the user has to select 'Tasks by Priority' and then is called to type the priority level (e.g. high, medium, low) he/she wishes to view.
+
+![Tasks by Priority](images/priority.gif)
 
 ### Keyword Search
+Additionally, the program offers the function of keyword searching. The user has to login in the account and add tasks in the to-do list first. In case the to-do list is empty, the program notifies via the terminal the user accordingly. User can type a keyword and then the program returns the result inside the table to-do list.
+
+![Keyword Search](images/keyword-search.gif)
 
 ### Tasks by Due Date
+This function is optional but I added the a method of filtering tasks by due date in the main menu. The particular method returns all tasks ordered by date to-date.
 
 ### Logout
+Once the user has explored the to-do list application, can easily logout from the program by selecting the relevant option from the main menu. The application further gives the option to end the program by selecting the exit option from the initial menu.
+
+![Logout](images/logout.gif)
+
+### Future Enhancements
 
 ## Manual Testing
 
