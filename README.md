@@ -118,8 +118,6 @@ A user that already created an account can log in by entering their username and
 
 ### Logout
 
-## Data Model
-
 ## Manual Testing
 
 ## Deployment
