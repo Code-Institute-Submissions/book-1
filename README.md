@@ -32,6 +32,7 @@ The test user already contains a list of to-do tasks. Of course, you can also cr
        * [Tasks by Due Date](#tasks-by-due-date)
        * [Logout](#logout)
        * [Future Enhancements](#future-enhancements)
+       * [Technologies](#technologies)
    * [Data Model](#data-model)
    * [Manual Testing](#manual-testing)
    * [Deployment](#deployment)
@@ -151,6 +152,8 @@ The project is ready for production and has implemented all the planned features
 
 - Connect the program to a real database instead of the worksheets.
 - Make the to-do list downloadable and convert it to a PDF file. After doing some research, I think it should be possible to convert a to-do list to a PDF file the user can download. However, that is a project for the future and no necessary feature for this project.
+
+### Technologies
 
 ## Manual Testing
 
