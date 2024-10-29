@@ -33,6 +33,10 @@ The test user already contains a list of to-do tasks. Of course, you can also cr
        * [Logout](#logout)
        * [Future Enhancements](#future-enhancements)
    * [Technologies Used](#technologies-used)
+       * [Overview](#overview)
+       * [Tools](#tools)
+       * [Libraries](#libraries)
+       * [Requirements](#requirements)
    * [Manual Testing](#manual-testing)
    * [Deployment](#deployment)
    * [Credits](#credits)
@@ -153,6 +157,37 @@ The project is ready for production and has implemented all the planned features
 - Make the to-do list downloadable and convert it to a PDF file. After doing some research, I think it should be possible to convert a to-do list to a PDF file the user can download. However, that is a project for the future and no necessary feature for this project.
 
 ## Technologies Used
+
+### Overview
+The project structure is built upon the [Code Institute Project 3 template](https://github.com/Code-Institute-Org/p3-template), including custom Python code, along with the integration of ASCII art and rich library for visual appeal and user interface enhancement.
+
+### Tools
+- **Git** Used for version control eg. git add - commit - push
+- **Github** Used as the hosting platform for the repository.
+- **Gitpod** Used as the IDE for writing, editing and debugging code.
+- **Heroku** Used for deploying the application.
+- **Python** Used as the programming language for creating the application.
+- **.json** Used to save and load tasks in memory (e.g., in a Python dictionary)
+- **bcrypt** Used for securely hashing and verifying passwords.
+- **getpass** Used to prevent the typed characters from being displayed on the screen.
+- **rich** Used to create visually appealing tables and styled output in the terminal.
+
+### Libraries
+```import json``` Saves configurations, transfers data between applications, and handles API responses in Python program.<br>
+```import os``` Performs tasks such as file manipulation, directory management, environment variable access, process control.<br>
+```import bcrypt``` Provides hashing functions that are commonly used for securely storing and verifying passwords.<br>
+```import getpass``` Provides a way to securely handle password input in command-line interfaces by hiding the input from display.<br>
+```from rich.console import Console```Creates visually appealing and informative outputs in the terminal, easily adds colors, styles, and other formats without complex string manipulation, logs messages with timestamps, providing better debugging capabilities.<br>
+```from rich.table import Table``` Create and displays tables in the terminal with extensive styling and formatting options.<br>
+```from datetime import datetime``` Allows you to create, format, manipulate, and perform arithmetic on date and time objects.<br>
+
+### Requirements
+```bcrypt==4.2.0```<br>
+```PyQt5==5.15.11``` Provides robust capabilities for GUI-based applications in Python and allows for a high degree of customization for creating professional applications.<br>
+```PyQt5-Qt5==5.15.15``` Provides the core components used by PyQt5 to build and manage cross-platform GUIs.<br>
+```PyQt5_sip==12.15.0``` Acts as a bridge between Python and C++ for PyQt5 applications.<br>
+```rich==13.9.2``` Provides rich text and beautiful formatting in the terminal.<br>
+
 
 ## Manual Testing
 
