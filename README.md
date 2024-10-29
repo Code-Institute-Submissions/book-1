@@ -182,7 +182,7 @@ The project structure is built upon the [Code Institute Project 3 template](http
 ```from datetime import datetime``` Allows you to create, format, manipulate, and perform arithmetic on date and time objects.<br>
 
 ### Requirements
-```bcrypt==4.2.0```<br>
+```bcrypt==4.2.0``` Provides functionality to help protect sensitive data, particularly passwords, by implementing the bcrypt hashing algorithm. <br>
 ```PyQt5==5.15.11``` Provides robust capabilities for GUI-based applications in Python and allows for a high degree of customization for creating professional applications.<br>
 ```PyQt5-Qt5==5.15.15``` Provides the core components used by PyQt5 to build and manage cross-platform GUIs.<br>
 ```PyQt5_sip==12.15.0``` Acts as a bridge between Python and C++ for PyQt5 applications.<br>
