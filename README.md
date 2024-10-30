@@ -223,10 +223,32 @@ The project structure is built upon the [Code Institute Project 3 template](http
 | As the site owner, I want to provide the users with helpful feedback. | Feedback is given to the user after successfully creating an account or task. Headings and error messages are shown throughout the program. | Yes |
 | As the site owner, I want to be able to differentiate between users and show them the according tasks. | Each task is stored, clearly assigned to the user that created it. Only tasks created by the logged-in user are shown. | Yes |
 
-
 ### Fixed Bugs
+There are several bugs fixed during the development process. I kept a log of them and you may easily find the updated versions of the source code in the github repository. For instance,
+- **V.1.0** Created the simple menu item tasks list.
+- **V.1.1** Fixed an error with rich library to improve User Experience.
+- **V.1.2** Beautified code for better UX using chat gpt.
+- **V.1.3** Fixed error with validating user inputs.
+- **V.1.4** Fixed error when user is editing a task.
+- **V.1.5** Fixed a bug with ascii art.
+- **V.1.6** Added tasks due dates.
+- **V.1.7** Added emoticons to indicate the status of task completion.
+- **V.1.8** Fixed an error related to search functionality.
+- **V.1.9** Fixed an error related to due date filtering.
+- **V.1.10** Added successfully register and login functions.
+- **V.1.11** Fixed a bug with docstrings.
+- **V.1.12** Added tables included in the rich library
+- **V.1.13** Created a version without tables and it lacks user experience.
+- **V.1.14** Improved validation and error handling messages.
+- **V.1.15** Fixed a bug with rich library by updating the requirements.txt with a newer version in order to deploy in heroku.
+- **V.1.16** Added hide password while typing function.
+- **V.1.17** Improved validation process related to importing past dates.
+- **V.1.18** Improved the function related to sorting tasks by date.
+
 
 ### Unfixed Errors
+
+No errors to fix!
 
 ## Deployment
 
