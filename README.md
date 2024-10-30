@@ -191,6 +191,8 @@ The project structure is built upon the [Code Institute Project 3 template](http
 
 ## Manual Testing
 
+![CI Python Linter](images/linter.gif)
+
 ## Deployment
 
 ## Credits
