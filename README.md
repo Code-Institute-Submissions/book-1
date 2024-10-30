@@ -251,5 +251,23 @@ There are several bugs fixed during the development process. I kept a log of the
 No errors to fix!
 
 ## Deployment
+### via Heroku
+The project was developed to be used with the [Code Institute Template](https://github.com/Code-Institute-Org/p3-template) on a mock terminal. It was deployed on Heroku following these steps:
+1. **Sign Up/Login to Heroku**
+    - If you haven't already, sign up for a Heroku account at [Heroku's website](https://www.heroku.com/) or log in if you already have an account.
+2. **Create a New App on Heroku**
+    - Once logged in, navigate to your Heroku dashboard and click on the **New** button, then select **Create new app**. Choose a unique name for your app and select the region closest to your location.
+3. **Select Framework**
+    - Since the To-Do List includes both Python and Node.js components, you need to specify the correct buildpacks for deployment. Under the **Settings** tab of your Heroku app, navigate to the **Buildpacks** section and add the appropriate buildpacks for Python and Node.js. It's important to add the Python buildpack first.
+4. **Connect GitHub Repository**
+    - After creating your app, go to the **Deploy** tab within your app's dashboard. Under the **Deployment method** section, select **GitHub** as the deployment method. Search for your GitHub repository in the **Connect to GitHub** section and click **Connect**.
+5. **Configure Deployment Options**
+    -   Once connected, choose the branch you want to deploy (e.g. main) and optionally enable automatic deploys for future commits. 
+6. **Deploy Branch**
+    - After configuring the deployment options, manually deploy your application by clicking the **Deploy Branch** button.
+7. **Monitor Deployment Progress**
+    - Heroku will start deploying your application from the selected GitHub branch. You can monitor the deployment progress from the activity log on the same page. 
+8. **View Application**
+    - Once the deployment is complete, Heroku will provide you with a URL to access your deployed application. Click on **View** button to open your application in a new tab.                 
 
 ## Credits
