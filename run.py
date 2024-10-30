@@ -6,7 +6,6 @@ from rich.console import Console
 from rich.table import Table
 from datetime import datetime
 
-# ASCII art
 ascii_art = r'''
  /$$$$$$$$             /$$$$$$$               /$$       /$$             /$$
 |__  $$__/            | $$__  $$             | $$      |__/            | $$

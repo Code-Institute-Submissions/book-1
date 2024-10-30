@@ -37,7 +37,12 @@ The test user already contains a list of to-do tasks. Of course, you can also cr
        * [Tools](#tools)
        * [Libraries](#libraries)
        * [Requirements](#requirements)
+       * [ASCII Art](#ascii-art)
    * [Manual Testing](#manual-testing)
+       * [Python Code validation through PEP8](#python-code-validation-through-pep8)
+       * [Test Cases](#test-cases)
+       * [Fixed Bugs](#fixed-bugs)
+       * [Unfixed Errors](#unfixed-errors)
    * [Deployment](#deployment)
    * [Credits](#credits)
 
@@ -188,10 +193,20 @@ The project structure is built upon the [Code Institute Project 3 template](http
 ```PyQt5_sip==12.15.0``` Acts as a bridge between Python and C++ for PyQt5 applications.<br>
 ```rich==13.9.2``` Provides rich text and beautiful formatting in the terminal.<br>
 
+### ASCII Art
+
+![ASCII art](images/ascii-art.gif)
 
 ## Manual Testing
 
+### Python Code validation through [PEP8](https://pep8ci.herokuapp.com/)
 ![CI Python Linter](images/linter.gif)
+
+### Test Cases
+
+### Fixed Bugs
+
+### Unfixed Errors
 
 ## Deployment
 
