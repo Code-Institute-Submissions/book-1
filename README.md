@@ -44,6 +44,7 @@ The test user already contains a list of to-do tasks. Of course, you can also cr
        * [Fixed Bugs](#fixed-bugs)
        * [Unfixed Errors](#unfixed-errors)
    * [Deployment](#deployment)
+       * [via Heroku](#via-heroku)
    * [Credits](#credits)
 
 <!-- table of contents created by Adrian Bonnet, see https://github.com/Relex12/Markdown-Table-of-Contents for more -->
@@ -271,3 +272,10 @@ The project was developed to be used with the [Code Institute Template](https://
     - Once the deployment is complete, Heroku will provide you with a URL to access your deployed application. Click on **View** button to open your application in a new tab.                 
 
 ## Credits
+- Used [Adrian Bonnet](https://github.com/Relex12) complete list of github markdown table of contents.
+- Used [ChatGPT 4](https://chatgpt.com/) and [Stack Overflow](https://stackoverflow.com/) for minor improvements and better explanation on my requests for this project.
+- The main idea for this project was obtained by the Love Sandwiches walkthrough project of the [Code Institute](https://codeinstitute.net/ie/) course.
+- Used [DelfStack](https://www.delftstack.com/) to build the method to clear the console.
+- Used [Lucidchart](https://www.lucidchart.com/) to create the flowchart.
+- Used [patorjk website](http://patorjk.com/software/taag/#p=display&f=Big%20Money-ne&t=To-Do%20List) to generate ASCII Art.
+- Thank you to my Code Institute Mentor [Iuliia Konovalova](https://github.com/IuliiaKonovalova) for giving me valuable feedback and tips during this project.
