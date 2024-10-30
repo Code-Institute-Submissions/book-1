@@ -204,6 +204,26 @@ The project structure is built upon the [Code Institute Project 3 template](http
 
 ### Test Cases
 
+| Test Case | Expected Result | Pass |
+| --- | --- | --- |
+| As a user, I want to register and create an account. | The first step of the application is to create an account. | Yes | 
+| As a user I want to be able to securely login. | The second step of the application is to login. | Yes | 
+| As a user, I want to create a task in my to-do list | The application can be used as a to-do list manager. A logged-in user can add tasks to it. | Yes | 
+| As a user, I want to save my tasks in the to-do list. | Tasks are automatically saved in the users.json file. | Yes | 
+| As a user, I want to delete a task after saving it. | Tasks can be deleted after logging in and choosing the according menu item. | Yes | 
+| As a user, I want to mark a task as complete. | Tasks can be set as done, an emoticon indicates the current status. | Yes |
+| As a user, I want to edit a task from the to-do list. | Tasks can be easily edited through the terminal (description name, priority level, due date). | Yes | 
+| As a user, I want to look up my tasks after saving them. | Tasks can be viewed after logging in and choosing the relevant menu item. | Yes | 
+| As a user, I want to filter my tasks by priority. | Tasks can be filtered after logging in and choosing the relevant menu item. | Yes | 
+| As a user, I want to search my tasks by a specific keyword. | Keyword searching is available by choosing the relevant menu item. | Yes |
+| As a user, I want to sort my tasks by due date. | Tasks can be sorted by due date by choosing the relevant menu item. | Yes |
+| As a user, I want to logout of the application and exit the program. | The user is successfully logged out and can exit the program by choosing the relevant menu item | Yes |
+| As a user, I want to get clear feedback from the application. | Input validation ensures that the input from the user is correct. If not, clear error messages are returned and headings indicate what the user can do at each step. | Yes |
+| As the site owner, I want to ensure the users have a good experience using the to-do list. | The application is built with UX in mind. Colors and tables are used to improve the user experience. | Yes |
+| As the site owner, I want to provide the users with helpful feedback. | Feedback is given to the user after successfully creating an account or task. Headings and error messages are shown throughout the program. | Yes |
+| As the site owner, I want to be able to differentiate between users and show them the according tasks. | Each task is stored, clearly assigned to the user that created it. Only tasks created by the logged-in user are shown. | Yes |
+
+
 ### Fixed Bugs
 
 ### Unfixed Errors
